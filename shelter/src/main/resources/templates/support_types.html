@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <body>
+        <th:block layout:fragment="rows">
+            <form method="POST" th:action="'/support_types/add'" >
+
+                <table class="table">
+
+                    <div class="caption">
+                        <input  name="title" placeholder="Тип поддержки"  />
+                    </div>					
+
+
+                </table>
+                <button type="submit" class="btn btn-primary">Добавить</button> 
+                <button type="reset" class="btn btn-default">Очистить поля</button> 
+            </form>
+
+            <br/><br/>
+
+            <br/> 
+
+
+            <br/><br/><br/>
+
+            <tbody>
+                <tr th:each="support_type : ${support_types}">
+                    <tr class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <a class="thumbnail" th:href="@{'/support_types/' + ${support_type.pk_support_type}}">
+
+                                <div class="caption">
+
+                                    <center><h4>Тип поддержки: <strong><span th:text="${support_type.title}"></span></strong></h4></center>
+
+                                </div>
+                            </a>
+                        </div>
+
+                    </tr>
+                </tr>
+            </tbody>
+        </th:block>
+    </body>
+</html>

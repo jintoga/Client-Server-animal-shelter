@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <th:block layout:fragment="rows">
+        <div class="container">
+            <form method="POST" th:action="'/support_types/' + ${support_type.pk_support_type}">
+                <input type="hidden" name="_method" value="POST" />
+                <table class="table">
+
+                    <div class="caption">
+                        <span class="col-sm-2" >Тип поддержки:</span>
+                        <input  name="title" th:value="${support_type.title}"    />
+                    </div>					
+
+
+                </table>
+
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+                <br/><br/><br/>
+
+            </form>
+
+
+
+        </div>
+        <script>
+            document.title = "редактирование";
+        </script>
+    </th:block>
+
+</html>
+

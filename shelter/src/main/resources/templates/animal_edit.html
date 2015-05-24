@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <th:block layout:fragment="rows">
+        <div class="container">
+            <form method="POST" th:action="'/animals/' + ${animal.pk_animal}" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="POST" />
+                <table class="table">
+                    <div class="caption">
+                        <span class="col-sm-2" >Вид:</span>
+                        <select  name="pk_type_animal">
+
+                            <c:forEach th:each="item: ${all_type_animal}">
+                                <option   th:value="${item.pk_type_animal}"  th:selected="${item.pk_type_animal} == ${type_animal.pk_type_animal}" th:text="${item.title}"></option>
+                            </c:forEach>
+                        </select> 
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Имя:</span>
+                        <input  name="name" th:value="${animal.name}"    />
+                    </div>					
+
+                    <div class="caption">
+                        <span class="col-sm-2" >Пол: </span>
+                        <select name="gender" >
+                            <option th:value="1" th:selected="1 == ${animal.gender}">Мальчик</option>
+                            <option th:value="2" th:selected="2 == ${animal.gender}">Девочка</option>
+                        </select> 
+                    </div>	
+                    <div class="caption">
+                        <span class="col-sm-2" >Тип (бесхозная, ...):</span>
+                        <input  name="type" th:value="${animal.type}" />
+                    </div>	
+                    <div class="caption">
+                        <span class="col-sm-2" >Цвет: </span>
+                        <input  name="color" th:value="${animal.color}"  />
+                    </div>	
+                    <div class="caption">
+                        <span class="col-sm-2" >Медицинский статус:</span>
+                        <input  name="health_status" th:value="${animal.health_status}"  />
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Размер(вес): </span>
+                        <input  name="weight" th:value="${animal.weight}"  />
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Порода : </span>
+                        <input  name="breed" th:value="${animal.breed}"  />
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Отношение с людьми: </span>
+                        <input  name="relationship_with_human" th:value="${animal.relationship_with_human}"  />
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Возраст:</span>
+                        <select name="age" >
+                            <option value="1" th:selected="1 == ${animal.age}">&lt; 1 года</option>
+                            <option value="2" th:selected="2 == ${animal.age}">1-3 лет</option>
+
+                            <option value="3" th:selected="3 == ${animal.age}">3-5 лет</option>
+                            <option value="4" th:selected="4 == ${animal.age}">&gt; 5 лет</option>
+                        </select>
+                    </div>
+                    <div class="span6">
+                        <span class="col-sm-2" >Описание:</span>
+                        <textarea   class="field span12"  rows="6"  th:field="${animal.description}" ></textarea>
+                    </div>
+                    <div class="caption">
+                        <span class="col-sm-2" >Стериализован: </span>
+                        <select name="sterilized" >
+                            <option th:value="1" th:selected="1 == ${animal.sterilized}">Да</option>
+                            <option th:value="2" th:selected="2 == ${animal.sterilized}">Нет</option>
+                        </select> 
+                    </div>
+                    <span class="col-sm-1" > </span>
+                    <span class="btn btn-default">
+                        Вставить картинку <input type="file" name="file" accept=".jpg,.jpeg,.png"/>
+                    </span>
+
+
+                </table>
+
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+                <br/><br/><br/>
+
+            </form>
+
+
+
+        </div>
+        <script>
+            document.title = "редактирование";
+        </script>
+    </th:block>
+
+</html>
+

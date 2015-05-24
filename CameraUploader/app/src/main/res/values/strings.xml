@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CameraUploader</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="cannot">Cannot</string>
+    <string name="album_name">New Album</string>
+    <string name="title_activity_get_list_animals">GetListAnimals</string>
+</resources>

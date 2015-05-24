@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+
+    <th:block layout:fragment="rows">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 th:text="${sponsor.name}"></h1>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img class="img-responsive" th:src="@{'/img/sponsors/' + ${sponsor.pk_sponsor}}" />
+            </div>
+            <div class="col-md-5">
+
+                <form style="float: left;   " method="GET" th:action="'/sponsors/' + ${sponsor.pk_sponsor}+'/edit'" >
+
+                    <button type="submit"  class="btn btn-primary" >Редактирование</button>
+                </form>
+
+                <form  style="float: right;" method="POST" th:action="'/sponsors/' + ${sponsor.pk_sponsor}">
+
+
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <button type="submit" class="btn btn-danger" >Удаление</button>
+
+                    <button type="button" class="btn btn-default" onclick="javascript:history.back()" >Назад</button>
+                </form>
+                <br/> <br/>
+                <h3>Описание</h3>
+                <p> <h5 th:text="${sponsor.description}"></h5></p> 
+                <h3>Подробности</h3>
+                <ul> 
+                    <li><strong>Название: </strong> <span th:text="${sponsor.name}"></span>  </li>
+                    <li><strong>Организация: </strong> <span th:text="${sponsor.showIs_organization}"></span> </li>
+                    <li><strong>Номер телефона: </strong> <span th:text="${sponsor.telephone}"></span> </li>
+                    <li><strong>Адрес:</strong>  <span th:text="${sponsor.address}"></span></li> 
+                    <li><strong>Сайт: </strong>  <span th:text="${sponsor.site}"></span>   </li>
+                    <li><strong>Почта: </strong>  <span th:text="${sponsor.email}"></span>   </li>
+
+                </ul>
+            </div>
+        </div>
+        <script>
+            document.title = "Спонсор";
+        </script>
+    </th:block>
+</html>
