@@ -7,4 +7,5 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">New Album</string>
     <string name="title_activity_get_list_animals">GetListAnimals</string>
+    <string name="title_activity_show_one_animal">ShowOneAnimal</string>
 </resources>

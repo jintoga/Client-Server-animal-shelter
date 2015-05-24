@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 
@@ -48,6 +49,9 @@ import org.imgscalr.Scalr;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,11 +62,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 /**
  *
  * @author DAT
  */
+@Configuration
+@AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
 @Controller
 public class MyController extends WebMvcConfigurerAdapter {
 
@@ -858,14 +866,24 @@ public class MyController extends WebMvcConfigurerAdapter {
     }
 
     private void deleteImage(String folderName, Long pk) {
-        String myPath = "C:\\testIMG\\static\\img" + File.separator + folderName;
-        File file = new File(myPath + File.separator + pk);
+        String folder = myPath + folderName; //  C:\\testIMG\\static\\img\\foldername
+        File file = new File(folder + File.separator + pk + extension); //  C:\\testIMG\\static\\img\\foldername\\pk.jpg
 
         if (file.delete()) {
-            log.info(file.getName() + "is Deleted");
+            log.info(file.getAbsolutePath() + " is Deleted");
         } else {
 
-            log.info(file.getName() + "Delete operation is failed.");
+            log.info(file.getAbsolutePath() + " Delete operation is failed.");
+        }
+        if (folderName.equals("animals")) {
+            String folderThumbnail = myPath + folderName + File.separator + "thumbnails"; // C:\\testIMG\\static\\img\\foldername\\thumbnails
+            File fileThumbnail = new File(folderThumbnail + File.separator + pk + extension); // C:\\testIMG\\static\\img\\foldername\\thumbnails\\pk
+            if (fileThumbnail.delete()) {
+                log.info(fileThumbnail.getAbsolutePath() + " Thumbnail is Deleted");
+            } else {
+
+                log.info(fileThumbnail.getAbsolutePath() + " Thumbnail is Delete operation is failed.");
+            }
         }
 
     }
@@ -879,7 +897,8 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("C:/testIMG/");
+        registry.addResourceHandler("static/**")
+                .addResourceLocations("file:/C:/testIMG/static");
+        super.addResourceHandlers(registry);
     }
-
 }

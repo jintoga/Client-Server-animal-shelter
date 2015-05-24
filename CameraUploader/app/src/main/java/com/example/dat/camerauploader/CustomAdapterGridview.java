@@ -42,7 +42,7 @@ public class CustomAdapterGridview extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return listAnimal.get(position);
     }
 
     @Override
@@ -72,10 +72,10 @@ public class CustomAdapterGridview extends BaseAdapter {
         //Animal animal = listAnimal.get(position);
         holder.textView.setText(listAnimal.get(position).getPk() + "");
         Picasso.with(mContext)
-                .load(listAnimal.get(position).getImageURL())
-                .placeholder(R.drawable.placeholder).transform(new RoundedTransformation(10, 10))
+                .load(listAnimal.get(position).getImageURLthumbnail())
+                .placeholder(R.drawable.placeholder)
                 .noFade()
-                .fit()
+                .resize(130, 130).transform(new RoundedTransformation(10, 10))
                 .centerInside()
                 .error(R.drawable.missing).memoryPolicy(MemoryPolicy.NO_CACHE)
                 .into(holder.imageView);

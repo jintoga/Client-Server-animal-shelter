@@ -7,6 +7,7 @@
     <artifactId>shelter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+     
 
     <name>shelter</name>
     <description>Demo project for Spring Boot</description>
@@ -90,9 +91,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                 
             </plugin>
         </plugins>
-        <outputDirectory>${basedir}/target/classes</outputDirectory>
         
         <resources>
             <resource>
@@ -100,13 +101,12 @@
             </resource>
              
             <resource>
-                <directory> C:/testIMG</directory>         
+                <filtering>true</filtering>
+                <directory>C:/testIMG</directory>      
+                  
             </resource>
-            
              
         </resources>
-        
-        
     </build>
-
+     
 </project>

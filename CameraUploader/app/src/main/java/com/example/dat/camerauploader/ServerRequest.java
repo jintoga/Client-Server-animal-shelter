@@ -136,7 +136,7 @@ public class ServerRequest {
 
                             getListAnimals.getListBitmap().add(decodedByte);*/
 
-                            Animal animal = new Animal(pk, name, null, context);
+                            Animal animal = new Animal(pk, name, null);
                             /*try {
                                 animal.convertImage();
                             } catch (IOException e) {

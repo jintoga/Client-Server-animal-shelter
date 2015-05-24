@@ -30,9 +30,9 @@ import java.util.Map;
 
 
 public class MainActivity extends Activity {
-    ImageButton btnCapture, btnUpload;
+    ImageButton btnCapture, btnUpload, btnBrowse;
     private ImageView imageView;
-    Button btnBrowse, btnListAnimals;
+    Button btnListAnimals;
 
     String picturePath;
 
@@ -69,9 +69,10 @@ public class MainActivity extends Activity {
         btnCapture = (ImageButton) findViewById(R.id.btnCapture);
         btnUpload = (ImageButton) findViewById(R.id.btnUpload);
         imageView = (ImageView) findViewById(R.id.Imageprev);
-        btnBrowse = (Button) findViewById(R.id.btnBrowseFile);
+        btnBrowse = (ImageButton) findViewById(R.id.btnBrowse);
         btnListAnimals = (Button) findViewById(R.id.btnListAnimals);
         btnUpload.setEnabled(false);
+        btnUpload.setVisibility(View.INVISIBLE);
     }
 
     public void addEvents() {
@@ -135,6 +136,7 @@ public class MainActivity extends Activity {
                         galleryAddPic();  //add image to Android Gallery
                         mCurrentPhotoPath = null;
                         btnUpload.setEnabled(true);
+                        btnUpload.setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (mCurrentPhotoPath != null) {
@@ -155,6 +157,7 @@ public class MainActivity extends Activity {
                         mImageBitmap = bitmap;
                         imageView.setImageBitmap(bitmap);
                         btnUpload.setEnabled(true);
+                        btnUpload.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

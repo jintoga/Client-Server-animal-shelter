@@ -1,6 +1,27 @@
 
 $(document).ready(function () {
+    
+    //check EMPTY INPUT
+    $("#addFrom").submit(function () {
+        var isFormValid = true;
 
+        $("#id_weight").each(function () {
+            if ($.trim($(this).val()).length === 0) {
+                $("#id_weight").addClass("highlight");
+                isFormValid = false;
+            }
+            else {
+                $(this).removeClass("highlight");
+            }
+        });
+
+        if (!isFormValid)
+            alert("Please fill in all the required fields (indicated by *)");
+
+        return isFormValid;
+    });
+    
+    //notifications from client
     $.ajax({
         type: "POST",
         url: "/notification",

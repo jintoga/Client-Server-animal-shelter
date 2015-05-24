@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#FFE8E8E8"
     tools:context=".GetListAnimals"
     android:orientation="vertical">
 
@@ -13,18 +13,19 @@
         android:id="@+id/buttonBack" />
 
     <GridView
+        android:background="#fff1f8ff"
         android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
         android:columnWidth="150dp"
-        android:drawSelectorOnTop="true"
+
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-
+        android:verticalSpacing="8dp"
+        android:horizontalSpacing="-5dp"
         android:focusable="true"
         android:clickable="true" />
 
