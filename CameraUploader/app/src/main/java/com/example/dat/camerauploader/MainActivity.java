@@ -13,12 +13,15 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -39,9 +42,8 @@ public class MainActivity extends Activity {
     Button btnListAnimals;
     LinearLayout linearLayoutBtnUpload;
 
-    CheckBox checkBoxMoreInfo;
-
-    TableLayout tableLayoutMoreInfo;
+    CheckBox checkBoxMoreInfo;    //add more information about animal
+    ScrollView scrollViewMoreInfo; //view to add more information
 
     String picturePath;
 
@@ -82,13 +84,11 @@ public class MainActivity extends Activity {
         btnListAnimals = (Button) findViewById(R.id.btnListAnimals);
         linearLayoutBtnUpload = (LinearLayout) findViewById(R.id.layoutforImgBtnUpload);
         linearLayoutBtnUpload.setVisibility(View.INVISIBLE);
-       /* btnUpload.setEnabled(false);
-        btnUpload.setVisibility(View.INVISIBLE);
-*/
 
         checkBoxMoreInfo = (CheckBox) findViewById(R.id.checkBoxMoreInformation);
-        tableLayoutMoreInfo = (TableLayout) findViewById(R.id.tableMoreInformation);
-        tableLayoutMoreInfo.setVisibility(View.GONE);
+
+        scrollViewMoreInfo = (ScrollView) findViewById(R.id.scrollViewMoreInfo);
+        scrollViewMoreInfo.setVisibility(View.INVISIBLE);
     }
 
     public void addEvents() {
@@ -120,14 +120,24 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+        final Animation animationExpand = AnimationUtils.loadAnimation(MainActivity.this, R.anim.expand_more_infomation);
+        final Animation animationCollapse = AnimationUtils.loadAnimation(MainActivity.this, R.anim.collapse_more_information);
 
         checkBoxMoreInfo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked)
-                    tableLayoutMoreInfo.setVisibility(View.VISIBLE);
-                else
-                    tableLayoutMoreInfo.setVisibility(View.GONE);
+                if (isChecked) {
+                    scrollViewMoreInfo.clearAnimation();
+                    scrollViewMoreInfo.startAnimation(animationExpand);
+                    scrollViewMoreInfo.setVisibility(View.VISIBLE);
+
+
+                } else {
+                    scrollViewMoreInfo.clearAnimation();
+                    scrollViewMoreInfo.startAnimation(animationCollapse);
+                    scrollViewMoreInfo.setVisibility(View.INVISIBLE);
+
+                }
             }
         });
     }
@@ -161,8 +171,6 @@ public class MainActivity extends Activity {
                         setPic();
                         galleryAddPic();  //add image to Android Gallery
                         mCurrentPhotoPath = null;
-                        /*btnUpload.setEnabled(true);
-                        btnUpload.setVisibility(View.VISIBLE);*/
                         linearLayoutBtnUpload.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -183,8 +191,6 @@ public class MainActivity extends Activity {
                         bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedimg);
                         mImageBitmap = bitmap;
                         imageView.setImageBitmap(bitmap);
-                        /*btnUpload.setEnabled(true);
-                        btnUpload.setVisibility(View.VISIBLE);*/
                         linearLayoutBtnUpload.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
                         e.printStackTrace();

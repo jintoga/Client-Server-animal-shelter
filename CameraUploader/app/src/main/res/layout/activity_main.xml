@@ -16,11 +16,11 @@
     <ImageView
         android:id="@+id/Imageprev"
         android:layout_marginLeft="5dp"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:src="@drawable/placeholder"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:layout_alignLeft="@+id/layoutforImgBtnUpload"
@@ -52,6 +52,259 @@
         android:layout_alignEnd="@+id/btnListAnimals" />
 
 
+    <TableLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/tableLayoutPhone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_style3"
+        android:layout_below="@id/Imageprev"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Номер Телефон:"
+                android:id="@+id/textView2"
+                android:textColor="#ff000000" />
+
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:id="@+id/editText4" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="Добавить Информации О Животном?"
+                android:textColor="#ff000000"
+                android:id="@+id/textView3" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Да"
+                android:id="@+id/checkBoxMoreInformation"
+                android:checked="false"
+                android:layout_gravity="center" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layerType="software"
+        android:background="@drawable/separator"
+        android:layout_below="@id/tableLayoutPhone"
+        android:layout_gravity="top"
+        android:id="@+id/dashView" />
+
+    <ScrollView
+        android:animateLayoutChanges="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/scrollViewMoreInfo"
+        android:layout_above="@id/layoutforImgBtnUpload"
+        android:background="@drawable/border_style3"
+        android:layout_below="@+id/tableLayoutPhone">
+
+        <TableLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:id="@+id/tableMoreInformation">
+
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вид:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView6" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerSpecies"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/array_item_test_for_spinner"
+                    android:focusable="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Кличка:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView4" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:id="@+id/editTextName" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff000000"
+                    android:text="Порода:"
+                    android:id="@+id/textView5" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/editTextBreed" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Пол:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView7" />
+
+                <RadioGroup
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:id="@+id/radioGroupGender">
+
+                    <RadioButton
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="М"
+                        android:layout_weight="1.5"
+                        android:id="@+id/radioButtonMale"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ж"
+                        android:layout_weight="1.5"
+                        android:id="@+id/radioButtonFemale"
+                        android:checked="false" />
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Возраст:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView8" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerAge"
+                    android:entries="@array/array_item_test_for_spinner" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вес:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView9" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/editTextWeight" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Стерилизован:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView11" />
+
+                <CheckBox
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Да"
+                    android:id="@+id/checkBoxSterilize"
+                    android:checked="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Другие Информации:"
+                    android:textColor="#ff000000"
+                    android:id="@+id/textView12" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:id="@+id/editTextDescription" />
+
+
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
     <LinearLayout
         android:id="@+id/layoutforImgBtnUpload"
         android:layout_width="wrap_content"
@@ -79,202 +332,5 @@
             android:textColor="#ff000000" />
 
     </LinearLayout>
-
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Imageprev"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/layoutforImgBtnUpload"
-        android:background="@drawable/border_style4"
-        android:id="@+id/scrollView">
-
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_style3"
-            android:stretchColumns="*">
-
-            <TableRow
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Номер Телефон:"
-                    android:id="@+id/textView2"
-                    android:textColor="#ff000000" />
-
-                <EditText
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:id="@+id/editText4" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:text="Добавить Информации О Животном?"
-                    android:textColor="#ff000000"
-                    android:id="@+id/textView3" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Да"
-                    android:id="@+id/checkBoxMoreInformation"
-                    android:checked="false"
-                    android:layout_gravity="center" />
-
-            </TableRow>
-
-            <TableLayout
-                android:layout_marginLeft="5dp"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:stretchColumns="*"
-                android:id="@+id/tableMoreInformation">
-
-
-                <View
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layerType="software"
-                    android:background="@drawable/separator"
-                    android:layout_gravity="center" />
-
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Вид:"
-                        android:textColor="#ff000000"
-                        android:id="@+id/textView6" />
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner"
-                        android:drawSelectorOnTop="true"
-                        android:entries="@array/array_item_test_for_spinner"
-                        android:focusable="true" />
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Кличка:"
-                        android:textColor="#ff000000"
-                        android:id="@+id/textView4" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText2" />
-
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff000000"
-                        android:text="Порода:"
-                        android:id="@+id/textView5" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText3" />
-
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Пол:"
-                        android:textColor="#ff000000"
-                        android:id="@+id/textView7" />
-
-                    <RadioGroup android:orientation="horizontal">
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="М"
-                            android:id="@+id/radioButton2"
-                            android:checked="false" />
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ж"
-                            android:id="@+id/radioButton"
-                            android:checked="false" />
-                    </RadioGroup>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Возраст:"
-                        android:textColor="#ff000000"
-                        android:id="@+id/textView8" />
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner3"
-                        android:entries="@array/array_item_test_for_spinner" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Вес:"
-                        android:textColor="#ff000000"
-                        android:id="@+id/textView9" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:id="@+id/editText" />
-                </TableRow>
-
-            </TableLayout>
-
-        </TableLayout>
-    </ScrollView>
-
 
 </RelativeLayout>
