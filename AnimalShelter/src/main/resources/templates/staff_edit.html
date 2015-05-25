@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <th:block layout:fragment="rows">
+
+        <form method="POST" th:action="'/staves/' + ${staff.pk_staff}" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="POST" />
+            <table class="table">
+
+                <div class="caption">
+                    <span class="col-sm-2" >Название:</span>
+                    <input  name="name" th:value="${staff.name}"    />
+                </div>					
+                <div class="caption">
+                    <span class="col-sm-2" >Должность:</span>
+                    <input  name="career" th:value="${staff.career}"  />
+                </div>
+                <div class="caption">
+                    <span class="col-sm-2" >Номер телефона:</span>
+                    <input  name="telephone" th:value="${staff.telephone}" />
+                </div>	
+                <div class="caption">
+                    <span class="col-sm-2" >Адрес: </span>
+                    <input  name="address" th:value="${staff.address}"  />
+                </div>	
+                <div class="caption">
+                    <span class="col-sm-2" >Дата рождения:</span>
+
+                    <div class="input-append date "  id="dp3" data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                        <span class="add-on">  
+                            <input   size="10" name="date_of_birth" th:value="${staff.date_of_birth}"  readonly="readonly" />
+                            <button class="glyphicon glyphicon-calendar   btn-link btn-xs"></button>
+
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="span6">
+                    <span class="col-sm-2" >Описание:</span>
+                    <textarea   class="field span12"  rows="6"  th:field="${staff.description}" ></textarea>
+                </div>
+
+                <span class="col-sm-1" > </span>
+                <span class="btn btn-default">
+                    Вставить картинку <input type="file" name="file" accept=".jpg,.jpeg,.png"/>
+                </span>
+
+
+            </table>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+            <br/><br/><br/>
+
+        </form>
+
+        <script>
+            $('#dp3').datepicker();
+        </script>
+        <script>
+            document.title = "редактирование";
+        </script>
+    </th:block>
+
+
+</html>
+

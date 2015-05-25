@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <body>
+        <th:block layout:fragment="rows">
+            <form method="POST" th:action="'/profits/add'" enctype="multipart/form-data">
+
+                <table class="table">
+                    <div class="caption">
+                        <input  name="amount" placeholder="Количество"  />
+                    </div>
+                    <div class="caption"> 
+
+                        <div class="input-append date dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                            <span class="add-on"> 
+                                <input   size="15" name="date_receive" placeholder="Дата получения" readonly="readonly" />
+                                <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="caption"> 
+                        <h5>Спонсор:
+                            <select  name="pk_sponsor" id="id_sponsor">
+                                <c:forEach th:each="item: ${sponsors}">
+                                    <option th:value="${item.pk_sponsor}"  th:text="${item.name} + '('+${item.pk_sponsor}+')' "></option>
+                                </c:forEach>
+                            </select> 
+                        </h5>
+                    </div>
+                    <div class="caption"> 
+                        <h5>Тип поддержки:
+                            <select  name="pk_support_type" id="id_support_type">
+                                <c:forEach th:each="item: ${support_types}">
+                                    <option  th:value="${item.pk_support_type}" th:text="${item.title} + '('+${item.pk_support_type}+')' "></option>
+                                </c:forEach>
+                            </select> 
+                        </h5>
+                    </div>
+                     
+                    <div class="span6">
+                        <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
+                    </div>
+                </table>
+                <button type="submit" class="btn btn-primary" id="add_button">Добавить</button> 
+                <button type="reset" class="btn btn-default">Очистить поля</button> 
+            </form>
+
+
+            <br/><br/>
+
+            <br/> 
+
+
+            <br/><br/><br/>
+
+            <tbody>
+
+                <tr th:each="profit: ${profits}">
+
+                    <div class="col-sm-6 col-md-4">
+
+                        <form  method="GET" th:action="@{'/profits/' + ${profit.pk_profit}}">
+                            <button class="btn-info btn-sm">Подробнее</button> 
+                        </form>
+
+                        <div class="thumbnail">
+                              
+                            <div class="caption">
+                                <center><h4>Количество: <strong><span th:text="${profit.amount}"></span></strong></h4></center>
+                                <center><h4>Дата получения: <strong><span th:text="${profit.date_receive}"></span></strong></h4></center>
+                                <center><h3>Спонсор: <span th:text="${profit.sponsor.name}"></span></h3></center>
+                                <center><h3>Тип поддержки: <span th:text="${profit.supporttype.title}"></span></h3></center>
+                                <center><h6>description: <span th:text="${profit.description}"></span></h6></center>
+ 
+                            </div>
+                        </div>
+                    </div>
+
+                </tr>
+            </tbody>
+        </th:block>
+
+
+    </body>
+</html>

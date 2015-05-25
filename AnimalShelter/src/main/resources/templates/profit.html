@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+
+    <th:block layout:fragment="rows">
+
+        <div class="row">
+             
+            <div style="float: left; padding-top: 50px" class="col-md-5">
+
+                <form style="float: left;   " method="GET" th:action="'/profits/' + ${profit.pk_profit}+'/edit'" >
+
+                    <button type="submit"  class="btn btn-primary" >Редактирование</button>
+                </form>
+
+                <form  style="float: right;" method="POST" th:action="'/profits/' + ${profit.pk_profit}">
+
+
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <button type="submit" class="btn btn-danger" >Удаление</button>
+
+                    <button type="button" class="btn btn-default" onclick="javascript:history.back()" >Назад</button>
+                </form>
+                <br/> <br/>
+                <h3>Описание</h3>
+                <p> <h5 th:text="${profit.description}"></h5></p> 
+                <h3>Подробности</h3>
+                <ul> 
+                    <li><strong>Количество: </strong> <span th:text="${profit.amount}"></span>  </li>
+                    <li><strong>Дата получения: </strong> <span th:text="${profit.date_receive}"></span>  </li>
+                    <li><strong>Спонсор: </strong>  <span th:text="${profit.sponsor.name}"></span>   </li> 
+                    <li><strong>Тип поддержки: </strong> <span th:text="${profit.supporttype.title}"></span> </li>                
+
+
+                </ul>
+            </div>
+        </div>
+    </th:block>
+</html>

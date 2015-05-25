@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+
+    <th:block layout:fragment="rows">
+
+        <form method="POST" th:action="'/volunteers/add'" enctype="multipart/form-data">
+
+            <table class="table">
+                <div class="caption">
+                    <input  name="name" placeholder="ФИО"  />
+                </div>
+                <div class="caption">
+                    <input  name="career" placeholder="Должность"  />
+                </div>
+
+                <div class="caption">
+                    <input  name="telephone" placeholder="Номер телефона"  />
+                </div>	
+
+                <div class="caption"> 
+
+                    <div class="input-append date dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                        <span class="add-on"> 
+                            <input   size="12" name="date_of_birth" placeholder="Дата рождения" readonly="readonly" />
+                            <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
+                        </span>
+                    </div>
+
+
+                </div>	
+
+                <div class="caption">
+                    <input  name="address" placeholder="Адрес"  />
+                </div>	
+
+                <span class="btn btn-default btn-file">
+                    Вставить картинку <input type="file" name="file"/>
+                </span>
+                <div class="span6">
+                    <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
+                </div>
+            </table>
+
+
+            <button type="submit" class="btn btn-primary">Добавить</button> 
+            <button type="reset" class="btn btn-default">Очистить поля</button> 
+
+        </form>
+
+        <br/><br/><br/>
+
+        <tbody>
+            <tr th:each="volunteer : ${volunteers}">
+
+                <div class="col-sm-6 col-md-4">
+                    <form class="getRidOfIt" method="GET" th:action="@{'/volunteers/' + ${volunteer.pk_volunteer} }">
+                        <button class="btn btn-info btn-xs">Подробнее</button> 
+                    </form>
+                    <div class="thumbnail"  >
+                        <img class="img-responsive" height="300" width="300" th:src="@{'../img/volunteers/' + ${volunteer.pk_volunteer}+ '.jpg'}"  />
+                        <div class="caption">
+                            <center><h4>ФИО: <strong><span th:text="${volunteer.name}"></span></strong></h4></center>
+                            <center><h6>Должность: <span th:text="${volunteer.career}"></span></h6></center>
+                            <center><h6>Номер телефона: <span th:text="${volunteer.telephone}"></span></h6></center>
+                            <center><h6>Дата рождения: <span th:text="${volunteer.date_of_birth}"></span></h6></center>
+                            <center><h6>Адрес: <span th:text="${volunteer.address}"></span></h6></center>
+                            <center><h6>description: <span th:text="${volunteer.description}"></span></h6></center>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </tr>
+        </tbody>
+        <script>
+            document.title = "Волонтёры";
+        </script>
+    </th:block>
+
+</html>

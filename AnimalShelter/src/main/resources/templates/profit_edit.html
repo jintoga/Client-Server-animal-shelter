@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <th:block layout:fragment="rows">
+
+        <form method="POST" th:action="'/profits/' + ${profit.pk_profit}">
+            <input type="hidden" name="_method" value="POST" />
+            <table class="table">
+
+                <div class="caption">
+                    <span class="col-sm-2" >Количество:</span>
+                    <input  name="amount" th:value="${profit.amount}"    />
+                </div>					
+
+                <div class="caption"> 
+                    <span class="col-sm-2" >Дата получения:</span>
+                    <div class="input-append date" id="dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                        <span class="add-on"> 
+                            <input   size="15" name="date_receive" th:value="${profit.date_receive}" readonly="readonly" />
+                            <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
+                        </span>
+                    </div>
+
+                </div>	
+                <div class="caption"> 
+                    <span class="col-sm-2" >
+                        Спонсор:
+                    </span>
+                    <select  name="pk_sponsor" id="id_sponsor">
+                        <c:forEach th:each="item: ${sponsors}">
+                            <option th:value="${item.pk_sponsor}" th:selected="${item.pk_sponsor} == ${sponsor.pk_sponsor}"  th:text="${item.name} + '('+${item.pk_sponsor}+')' "></option>
+                        </c:forEach>
+                    </select> 
+
+                </div>	
+                <div class="caption"> 
+                    <span class="col-sm-2" >Тип поддержки:</span>
+
+                    <select  name="pk_support_type" id="id_support_type">
+                        <c:forEach th:each="item: ${support_types}">
+                            <option  th:value="${item.pk_support_type}" th:selected="${item.pk_support_type} == ${support_type.pk_support_type}"  th:text="${item.title} + '('+${item.pk_support_type}+')' "></option>
+                        </c:forEach>
+                    </select> 
+
+                </div>
+
+                <div class="span6">
+                    <span class="col-sm-2" >Описание:</span>
+                    <textarea   class="field span12"  rows="6"  th:field="${profit.description}" ></textarea>
+                </div>
+
+
+
+            </table>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+            <br/><br/><br/>
+
+        </form>
+
+        <script>
+            $('#dp3').datepicker();
+        </script>
+        <script>
+            document.title = "редактирование";
+        </script>
+    </th:block>
+
+
+</html>
+

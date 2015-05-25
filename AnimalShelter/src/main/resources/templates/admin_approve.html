@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+
+    <th:block layout:fragment="rows">
+
+        <br/> 
+
+
+        <br/><br/><br/>
+
+        <table class="table">
+
+            <tr>
+                <th>Фото</th>
+                <th>Вид</th>
+                <th>Кличка</th>
+                <th>Контактный Номер</th>
+
+            </tr>
+            <tr th:each="animal: ${animals}">
+                <tr>
+
+                    <td> <div style="height: 70px; width: 70px"><img class="img-responsive" style="max-height: 100%; max-width: 100%"  th:src="@{'/img/temp_animals/' + ${animal.pk_animal}}"  /></div></td>
+                    <td><span class="myfilter2" th:text="${animal.type_animal.title}"></span></td>
+                    <td><span th:text="${animal.name}"></span></td>
+
+                    <td>
+                        <form  style="float: right" method="POST" th:action="'/animals/' + ${animal.pk_animal}+'/approve'"  >
+                            <button type="submit" class="approveAnimal btn btn-success" style="float: right">Утвердить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form  method="POST" th:action="'/animals/' + ${animal.pk_animal} + '/delete'">
+                            <input type="hidden" name="_method" value="DELETE"/>
+                            <button type="submit" class="btn btn-danger" >Удалить</button> 
+                        </form>
+                    </td>
+
+
+                </tr>
+
+
+            </tr>
+        </table>
+        <script>
+            document.title = "Admin";
+
+
+        </script>
+    </th:block>
+
+
+
+
+</html>

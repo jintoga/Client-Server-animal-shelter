@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>Animals</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="/css/bootstrap.css" />
+        <link rel="stylesheet" href="/css/datepicker.css" />
+        <link rel="stylesheet" href="/css/myNotification.css" />
+        <script src="/jquery/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap-datepicker.js"></script>
+        <script src="/less/datepicker.less"></script>
+        <script src="myscript.js"></script>
+    </head>
+
+    <body id="myBody" > 
+     
+        <div class="navbar navbar-default  navbar-form">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <span class="glyphicon glyphicon glyphicon-home"></span>
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a   th:href="'/admin'">От Клиентов<div id="newItemNotification"   class="badge" style="background: tomato; position:relative; top: -10px;"></div> </a></li>
+                        <li><a   th:href="'/shelters'">Приюты </a></li>
+
+                        <li>
+                            <a   data-toggle="dropdown" th:href="'/sponsors'">Спонсор<span class="caret"></span> </a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="'/sponsors'">Спонсоры</a></li>
+                                <li><a th:href="'/support_types'">Типы поддержки</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a   th:href="'/staves'">Сотрудники </a></li>
+                        <li><a  th:href="'/volunteers'">Волонтёры </a></li>
+                        <li><a   th:href="'/owners'">Передержки </a></li>
+                        <li><a   th:href="'/temp_owners'">Хозяин </a></li>
+                        <li class="dropdown">
+                            <a   class="dropdown-toggle" data-toggle="dropdown">Финансы<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="'/profits'">Доход</a></li>
+                                <li><a th:href="'/expenses'">Расход</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+
+            <th:block layout:fragment="rows" />
+        </div>
+
+        <div  id="addUpTop"  style="float: right; padding-right: 50px ; padding-bottom:  50px ;"></div> 
+
+    </body>
+</html>

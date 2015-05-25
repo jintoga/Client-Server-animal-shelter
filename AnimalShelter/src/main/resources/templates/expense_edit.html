@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
+
+    <th:block layout:fragment="rows">
+        <div class="container">
+            <form method="POST" th:action="'/expenses/' + ${expense.pk_expense}">
+                <input type="hidden" name="_method" value="POST" />
+                <table class="table">
+
+                    <div class="caption">
+                        <span class="col-sm-2" >Продукт:</span>
+                        <input  name="product" th:value="${expense.product}"    />
+                    </div>					
+
+                    <div class="caption">
+                        <span class="col-sm-2" >Цена:</span>
+                        <input  name="price" th:value="${expense.price}" />
+                    </div>	
+                    <div class="caption">
+                        <span class="col-sm-2" >Дата использования: </span>
+                        <div class="input-append date "  id="dp3" data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                            <span class="add-on">  
+                                <input   size="10" name="date_use" th:value="${expense.date_use}"  readonly="readonly" />
+                                <button class="glyphicon glyphicon-calendar   btn-link btn-xs"></button>
+
+                            </span>
+                        </div>
+                    </div>	
+                    <div class="caption">
+                        <span class="col-sm-2" >Организация:</span>
+                        <input  name="organization" th:value="${expense.organization}"  />
+                    </div>
+
+                    <div class="span6">
+                        <span class="col-sm-2" >Описание:</span>
+                        <textarea   class="field span12"  rows="6"  th:field="${expense.description}" ></textarea>
+                    </div>
+
+                </table>
+
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+                <br/><br/><br/>
+
+            </form>
+
+
+
+        </div>
+
+        <script>
+            $('#dp3').datepicker();
+        </script>
+        <script>
+            document.title = "редактирование";
+        </script>
+    </th:block>
+
+</html>
+
