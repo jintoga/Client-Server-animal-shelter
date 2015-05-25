@@ -14,8 +14,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -31,8 +35,13 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
     ImageButton btnCapture, btnUpload, btnBrowse;
-    private ImageView imageView;
+    public ImageView imageView;
     Button btnListAnimals;
+    LinearLayout linearLayoutBtnUpload;
+
+    CheckBox checkBoxMoreInfo;
+
+    TableLayout tableLayoutMoreInfo;
 
     String picturePath;
 
@@ -71,8 +80,15 @@ public class MainActivity extends Activity {
         imageView = (ImageView) findViewById(R.id.Imageprev);
         btnBrowse = (ImageButton) findViewById(R.id.btnBrowse);
         btnListAnimals = (Button) findViewById(R.id.btnListAnimals);
-        btnUpload.setEnabled(false);
+        linearLayoutBtnUpload = (LinearLayout) findViewById(R.id.layoutforImgBtnUpload);
+        linearLayoutBtnUpload.setVisibility(View.INVISIBLE);
+       /* btnUpload.setEnabled(false);
         btnUpload.setVisibility(View.INVISIBLE);
+*/
+
+        checkBoxMoreInfo = (CheckBox) findViewById(R.id.checkBoxMoreInformation);
+        tableLayoutMoreInfo = (TableLayout) findViewById(R.id.tableMoreInformation);
+        tableLayoutMoreInfo.setVisibility(View.GONE);
     }
 
     public void addEvents() {
@@ -104,11 +120,21 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        checkBoxMoreInfo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked)
+                    tableLayoutMoreInfo.setVisibility(View.VISIBLE);
+                else
+                    tableLayoutMoreInfo.setVisibility(View.GONE);
+            }
+        });
     }
 
 
     /**
-     * Hàm xử ly lấy encode hình để gửi lên Server
+     * Encode image and send to Server
      */
     private void uploadPictureToServer() {
         Log.e("path", "----------------" + picturePath);
@@ -135,8 +161,9 @@ public class MainActivity extends Activity {
                         setPic();
                         galleryAddPic();  //add image to Android Gallery
                         mCurrentPhotoPath = null;
-                        btnUpload.setEnabled(true);
-                        btnUpload.setVisibility(View.VISIBLE);
+                        /*btnUpload.setEnabled(true);
+                        btnUpload.setVisibility(View.VISIBLE);*/
+                        linearLayoutBtnUpload.setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (mCurrentPhotoPath != null) {
@@ -156,8 +183,9 @@ public class MainActivity extends Activity {
                         bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedimg);
                         mImageBitmap = bitmap;
                         imageView.setImageBitmap(bitmap);
-                        btnUpload.setEnabled(true);
-                        btnUpload.setVisibility(View.VISIBLE);
+                        /*btnUpload.setEnabled(true);
+                        btnUpload.setVisibility(View.VISIBLE);*/
+                        linearLayoutBtnUpload.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

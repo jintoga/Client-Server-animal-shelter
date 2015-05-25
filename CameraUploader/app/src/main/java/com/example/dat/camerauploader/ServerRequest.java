@@ -1,10 +1,12 @@
 package com.example.dat.camerauploader;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -58,26 +60,9 @@ public class ServerRequest {
             public void onResponse(String jsonString) {
 
 
-                Toast.makeText(context, "jsonObject" + jsonString, Toast.LENGTH_SHORT).show();
-                try {
-
-                    // Getting JSON Array node
-                    JSONArray jsonArray = new JSONArray(jsonString);
-                    Toast.makeText(context, jsonArray.toString(), Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String name = jsonObject.getString(TAG_NAME);
-                        String pk = jsonObject.getString(TAG_PK);
-
-                        Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(context, pk, Toast.LENGTH_SHORT).show();
-
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Toast.makeText(context, "Uploaded Successfully. Thanks!", Toast.LENGTH_SHORT).show();
+                ((MainActivity) context).linearLayoutBtnUpload.setVisibility(View.INVISIBLE);    //disable Upload button after uploaded successfully
+                ((MainActivity) context).imageView.setImageResource(R.drawable.placeholder);  //empty the imageView
                 progressDialog.hide();
                 progressDialog.dismiss();
 
