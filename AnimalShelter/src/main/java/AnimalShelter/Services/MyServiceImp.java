@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package AnimalShelter.Services;
- 
+
 import AnimalShelter.Core.Animal;
 import AnimalShelter.Core.Expense;
 import AnimalShelter.Core.Owner;
@@ -119,9 +119,9 @@ public class MyServiceImp implements MyService {
     }
 
     @Override
-    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized, boolean isApproved) {
+    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved) {
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
-        Animal animal = new Animal(type_animal, name, type, gender, color, health_status, weight, breed, relationship_with_human, age, description, sterilized);
+        Animal animal = new Animal(type_animal, name, type, gender, weight, breed, age, description, sterilized);
         if (isApproved) {
             animal.setIs_approved(isApprovedByAdmin);
         }
@@ -184,10 +184,10 @@ public class MyServiceImp implements MyService {
     }
 
     @Override
-    public void updateAnimal(Long pk_animal, Long pk_type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public void updateAnimal(Long pk_animal, Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         Animal animal = animal(pk_animal);
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
-        animal.updateAnimal(type_animal, name, type, gender, color, health_status, weight, breed, relationship_with_human, age, description, sterilized);
+        animal.updateAnimal(type_animal, name, type, gender, weight, breed, age, description, sterilized);
         animals.save(animal);
     }
 

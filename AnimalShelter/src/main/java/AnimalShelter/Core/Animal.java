@@ -33,11 +33,8 @@ public class Animal implements Serializable {
     @Column(nullable = true, unique = false)
     private String name;
     private String type;
-    private String color;
-    private String health_status;
     private float weight;
     private String breed;
-    private String relationship_with_human;
     private int age;
 
     private String description;
@@ -83,16 +80,13 @@ public class Animal implements Serializable {
     public Animal() {
     }
 
-    public Animal(Type_Animal type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public Animal(Type_Animal type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         this.typeanimal = type_animal;
         this.name = name;
         this.type = type;
         this.gender = gender;
-        this.color = color;
-        this.health_status = health_status;
         this.weight = weight;
         this.breed = breed;
-        this.relationship_with_human = relationship_with_human;
         this.age = age;
 
         this.description = description;
@@ -120,24 +114,12 @@ public class Animal implements Serializable {
         return gender;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public String getHealth_status() {
-        return health_status;
-    }
-
     public float getWeight() {
         return weight;
     }
 
     public String getBreed() {
         return breed;
-    }
-
-    public String getRelationship_with_human() {
-        return relationship_with_human;
     }
 
     public int getAge() {
@@ -156,16 +138,13 @@ public class Animal implements Serializable {
         return type;
     }
 
-    public void updateAnimal(Type_Animal type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public void updateAnimal(Type_Animal type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         this.typeanimal = type_animal;
         this.name = name;
         this.type = type;
         this.gender = gender;
-        this.color = color;
-        this.health_status = health_status;
         this.weight = weight;
         this.breed = breed;
-        this.relationship_with_human = relationship_with_human;
         this.age = age;
 
         this.description = description;

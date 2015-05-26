@@ -75,7 +75,7 @@ public interface MyService {
 
     public Expense addExpense(String product, int price, String organization, String date_use, String description);
 
-    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized, boolean isApproved);
+    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved);
 
     public Type_Animal findAnimalPK(String type_animal);
 
@@ -91,7 +91,7 @@ public interface MyService {
 
     void deleteExpense(Long pk_expense);
 
-    void updateAnimal(Long id, Long pk_type_animaln, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized);
+    void updateAnimal(Long id, Long pk_type_animaln, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized);
 
     void updateExpense(Long id, String product, int price, String organization, String date_use, String description);
 

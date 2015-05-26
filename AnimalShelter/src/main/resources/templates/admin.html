@@ -4,7 +4,7 @@
 
 
     <th:block layout:fragment="rows">
- 
+
         <br/> 
 
 
@@ -16,17 +16,20 @@
                 <th>Фото</th>
                 <th>Вид</th>
                 <th>Кличка</th>
+                <th>Пол</th>
                 <th>Контактный Номер</th>
-                
+
             </tr>
             <tr th:each="animal: ${animals}">
                 <tr>
-                    <td><div style="height: 70px; width: 70px"><img class="img-responsive" style="max-height: 100%; max-width: 100%"  th:src="@{'/img/animals/' + ${animal.pk_animal}}"  /></div></td>
+
+                    <td> <div style="height: 70px; width: 70px"><img class="img-responsive" style="max-height: 100%; max-width: 100%"  th:src="@{'/img/temp_animals/' + ${animal.pk_animal} + '.jpg'}"  /></div></td>
                     <td><span class="myfilter2" th:text="${animal.type_animal.title}"></span></td>
                     <td><span th:text="${animal.name}"></span></td>
+                    <td><span th:text="${animal.showGender}"></span></td>
                     <td>
-                        <form  style="float: right" method="GET" th:action="'/animals/' + ${animal.pk_animal}+'/edit'"  >
-                            <button type="submit"  class="btn btn-success" >Утвердить</button>
+                        <form  style="float: right" method="POST" th:action="'/animals/' + ${animal.pk_animal}+'/approve'"  >
+                            <button type="submit" class="approveAnimal btn btn-success" style="float: right">Утвердить</button>
                         </form>
                     </td>
                     <td>

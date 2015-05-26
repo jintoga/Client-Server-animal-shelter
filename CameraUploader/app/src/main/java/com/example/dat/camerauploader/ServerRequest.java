@@ -58,7 +58,23 @@ public class ServerRequest {
         CustomRequest jsObjRequest = new CustomRequest(Request.Method.POST, myUrl, informationAnimal, new Response.Listener<String>() {
             @Override
             public void onResponse(String jsonString) {
+                /*try {
+                    // Getting JSON Array node
+                    JSONArray jsonArray = new JSONArray(jsonString);
+                    Toast.makeText(context, jsonArray.toString(), Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String name = jsonObject.getString(TAG_NAME);
+                        String pk = jsonObject.getString(TAG_PK);
 
+                        Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, pk, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
 
                 Toast.makeText(context, "Uploaded Successfully. Thanks!", Toast.LENGTH_SHORT).show();
                 ((MainActivity) context).linearLayoutBtnUpload.setVisibility(View.INVISIBLE);    //disable Upload button after uploaded successfully

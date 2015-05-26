@@ -33,22 +33,14 @@
                 <div class="caption">
                     <input  name="type" placeholder="Тип (бесхозная,...)"  />
                 </div>	
-                <div class="caption">
-                    <input  name="color" placeholder="Цвет"  />
-
-                </div>	
-                <div class="caption">
-                    <input  name="health_status" placeholder="Медицинский статус"  />
-                </div>	
+         	
                 <div class="caption">
                     <input type="number"  name="weight" placeholder="Размер(вес)" id="id_weight" />
                 </div>	
                 <div class="caption">
                     <input  name="breed" placeholder="Порода"  />
                 </div>	
-                <div class="caption">
-                    <input  name="relationship_with_human" placeholder="Отношение с людьми"  />
-                </div>	
+            	
                 <div class="caption"> 
                     <h5>Возраст:
                         <select name="age" id="id_age">
@@ -143,12 +135,9 @@
                             <center><h3>Вид: <span class="myfilter2" th:text="${animal.type_animal.title}"></span></h3></center>
                             <center><h4>Имя: <strong><span th:text="${animal.name}"></span></strong></h4></center>
                             <center><h6>Тип: <span th:text="${animal.type}"></span></h6></center>
-                            <center><h6>Пол: <span th:text="${animal.showGender}"></span></h6></center>
-                            <center><h6>Цвет: <span th:text="${animal.color}"></span></h6></center>
-                            <center><h6>Медицинский: <span th:text="${animal.health_status}"></span></h6></center>
+                            <center><h6>Пол: <span th:text="${animal.showGender}"></span></h6></center> 
                             <center><h6>вес: <span th:text="${animal.weight}"></span></h6></center>
-                            <center><h6>Порода: <span th:text="${animal.breed}"></span></h6></center>
-                            <center><h6>Отношение с людьми: <span th:text="${animal.relationship_with_human}"></span></h6></center>
+                            <center><h6>Порода: <span th:text="${animal.breed}"></span></h6></center> 
                             <center><h6>Стериализован: <span th:text="${animal.sterilized_status}"></span></h6></center>
                             <center><h6>Возраст: <span th:text="${animal.showAge}"></span></h6></center>
                             <center><h6>description: <span th:text="${animal.description}"></span></h6></center>

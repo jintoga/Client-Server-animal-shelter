@@ -9,9 +9,17 @@
     <string name="title_activity_get_list_animals">GetListAnimals</string>
     <string name="title_activity_show_one_animal">ShowOneAnimal</string>
 
-    <string-array name="array_item_test_for_spinner">
-        <item>Array Item One</item>
-        <item>Array Item Two</item>
-        <item>Array Item Three</item>
+    <string-array name="array_item_for_spinner_species">
+        <item>Собака</item>
+        <item>Кот</item>
+        <item>Прочие</item>
+    </string-array>
+
+    <string-array name="array_item_for_spinner_age">
+        <item></item>
+        <item>&lt;1 года</item>
+        <item>1-3 лет</item>
+        <item>3-5 лет</item>
+        <item>&gt;5 лет</item>
     </string-array>
 </resources>

@@ -15,13 +15,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -37,6 +41,12 @@ import java.util.Map;
 
 
 public class MainActivity extends Activity {
+
+    Spinner spinnerSpecies, spinnerAge;
+    EditText editTextName, editTextBreed, editTextWeight, editTextDescription;
+    RadioGroup radioGroupGender;
+    CheckBox checkBoxSterilize;
+
     ImageButton btnCapture, btnUpload, btnBrowse;
     public ImageView imageView;
     Button btnListAnimals;
@@ -58,7 +68,20 @@ public class MainActivity extends Activity {
     private static final String JPEG_FILE_PREFIX = "IMG_";
     private static final String JPEG_FILE_SUFFIX = ".jpg";
 
-    Bitmap bmFromServer;
+    private static final String TAG_SPECIES = "species";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_BREED = "breed";
+    private static final String TAG_GENDER = "gender";
+    private static final String TAG_WEIGHT = "weight";
+    private static final String TAG_AGE = "age";
+    private static final String TAG_STERILIZE = "sterilize";
+    private static final String TAG_DESCRIPTION = "description";
+
+    private String animalSpecies, animalName, animalBreed, animalDescription;
+    private String animalWeight;
+    private int animalAge, animalGender, animalSterilize;
+
+    Map<String, String> informationAnimal = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +112,17 @@ public class MainActivity extends Activity {
 
         scrollViewMoreInfo = (ScrollView) findViewById(R.id.scrollViewMoreInfo);
         scrollViewMoreInfo.setVisibility(View.INVISIBLE);
+
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextBreed = (EditText) findViewById(R.id.editTextBreed);
+        editTextWeight = (EditText) findViewById(R.id.editTextWeight);
+        editTextDescription = (EditText) findViewById(R.id.editTextDescription);
+
+        spinnerSpecies = (Spinner) findViewById(R.id.spinnerSpecies);
+        spinnerAge = (Spinner) findViewById(R.id.spinnerAge);
+
+        radioGroupGender = (RadioGroup) findViewById(R.id.radioGroupGender);
+        checkBoxSterilize = (CheckBox) findViewById(R.id.checkBoxSterilize);
     }
 
     public void addEvents() {
@@ -130,14 +164,63 @@ public class MainActivity extends Activity {
                     scrollViewMoreInfo.clearAnimation();
                     scrollViewMoreInfo.startAnimation(animationExpand);
                     scrollViewMoreInfo.setVisibility(View.VISIBLE);
-
-
                 } else {
                     scrollViewMoreInfo.clearAnimation();
                     scrollViewMoreInfo.startAnimation(animationCollapse);
                     scrollViewMoreInfo.setVisibility(View.INVISIBLE);
-
                 }
+            }
+        });
+
+        spinnerSpecies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getBaseContext(), spinnerSpecies.getSelectedItem().toString() + "Position:" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                /*Toast.makeText(getBaseContext(), spinnerAge.getSelectedItem().toString() + "Position:" + position,
+                        Toast.LENGTH_SHORT).show();*/
+                //animalAge = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        radioGroupGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int memberID) {
+                /*if (memberID == R.id.radioButtonMale) {
+                    //Toast.makeText(MainActivity.this, "Male", Toast.LENGTH_SHORT).show();
+                    animalGender = 1;
+                } else if (memberID == R.id.radioButtonFemale) {
+                    //Toast.makeText(MainActivity.this, "Female", Toast.LENGTH_SHORT).show();
+                    animalGender = 2;
+                }*/
+            }
+        });
+
+        checkBoxSterilize.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                /*if (checked) {
+                    //Toast.makeText(MainActivity.this, "Sterilized", Toast.LENGTH_SHORT).show();
+                    animalSterilize = 1;
+                } else {
+                    animalSterilize = 2;
+                }*/
             }
         });
     }
@@ -155,10 +238,60 @@ public class MainActivity extends Activity {
         String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
 
         Log.e("base64", "-----" + ba1);
-        Map<String, String> informationAnimal = new HashMap<>();
-        informationAnimal.put("description", ba1);
+
+        informationAnimal.put("image", ba1);
+
+        createInformationToSend();
         ServerRequest serverRequest = new ServerRequest(MainActivity.this);
         serverRequest.uploadingToServer(this, informationAnimal);
+    }
+
+    private void createInformationToSend() {
+        if (checkBoxMoreInfo.isChecked()) {
+            animalSpecies = spinnerSpecies.getSelectedItem().toString();
+            animalName = editTextName.getText() + "";
+            animalBreed = editTextBreed.getText() + "";
+            //animalGender is assigned in addEvents() Method
+            if (radioGroupGender.getCheckedRadioButtonId() == R.id.radioButtonMale) {
+                animalGender = 1;
+            } else if (radioGroupGender.getCheckedRadioButtonId() == R.id.radioButtonMale) {
+                animalGender = 2;
+            }
+            animalAge = spinnerAge.getSelectedItemPosition();
+            animalWeight = editTextWeight.getText() + "";
+            if (animalWeight.isEmpty()) {
+                animalWeight = "0";
+            }
+            //animalSterilize is assigned addEvents () Method
+            if (checkBoxSterilize.isChecked()) {
+                animalSterilize = 1;
+            } else if (!checkBoxSterilize.isChecked()) {
+                animalSterilize = 2;
+            }
+            animalDescription = editTextDescription.getText() + "";
+
+
+        } else {
+            animalSpecies = "Прочие";
+            animalName = "";
+            animalBreed = "";
+            animalGender = 0;
+            animalAge = 0;
+            animalWeight = "0";
+            animalSterilize = 0;
+            animalDescription = "";
+
+
+        }
+        informationAnimal.put(TAG_SPECIES, animalSpecies + "");
+        informationAnimal.put(TAG_NAME, animalName);
+        informationAnimal.put(TAG_BREED, animalBreed);
+        informationAnimal.put(TAG_GENDER, animalGender + "");
+        informationAnimal.put(TAG_AGE, animalAge + "");
+        informationAnimal.put(TAG_WEIGHT, animalWeight + "");
+        informationAnimal.put(TAG_STERILIZE, animalSterilize + "");
+        informationAnimal.put(TAG_DESCRIPTION, animalDescription);
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

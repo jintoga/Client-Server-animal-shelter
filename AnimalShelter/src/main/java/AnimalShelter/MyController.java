@@ -56,7 +56,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Controller
 public class MyController extends WebMvcConfigurerAdapter {
-
+    
     private final boolean isNotApproved = false;
     private final boolean isApproved = true;
     private final String tag_pk = "pk";
@@ -64,16 +64,16 @@ public class MyController extends WebMvcConfigurerAdapter {
     private final String tag_image = "image";
     @Autowired
     private MyService svc;
-
+    
     protected final Log log = LogFactory.getLog(getClass());
-
+    
     private String getFile(Long pk_animal) throws FileNotFoundException, IOException {
         String stringOfDecodedImage = null;
         String myFile = "C:\\testIMG\\static\\img\\animals\\" + pk_animal + ".jpg";
         File file = new File(myFile);
-
+        
         if (file.exists()) {
-
+            
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             BufferedImage bi = ImageIO.read(file);
             ImageIO.write(bi, "JPG", baos);
@@ -89,9 +89,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/loading")
     public Object clientLoadingFromServer(String data) {
-
+        
         JSONArray jsonArray = null;
-
+        
         JSONObject jSONObject;
         if (svc.animalsIsApprovedByAdmin().size() > 0) {
             jsonArray = new JSONArray();
@@ -108,7 +108,7 @@ public class MyController extends WebMvcConfigurerAdapter {
                 jsonArray.add(jSONObject);
             }
         }
-
+        
         return jsonArray;
     }
 
@@ -132,27 +132,27 @@ public class MyController extends WebMvcConfigurerAdapter {
         String pathTarget = "C:\\testIMG\\static\\img" + File.separator + "animals\\";
         File fileSource = new File(pathSource + File.separator + pk_animal + ".jpg");
         File fileTarget = new File(pathTarget + File.separator + pk_animal + ".jpg");
-
+        
         if (!fileTarget.exists()) {
             fileTarget.mkdirs();
         }
         Files.move(fileSource.toPath(), fileTarget.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
+        
         String path = "C:\\testIMG\\static\\img" + File.separator + "animals";
         makeThumbnails(fileTarget, path, pk_animal);
         return "redirect:/admin";
     }
 
-    //animals page
+    //admin page
     @RequestMapping(method = RequestMethod.GET, value = "/admin")
     public String admin(Model vars) {
         vars.addAttribute("type_animal", svc.type_animal());
         vars.addAttribute("animals", svc.animalsWaitForApprove());
-
+        
         svc.filterGender();
         svc.filterSterilized();
         svc.filterAge();
-        return "admin_approve";
+        return "admin";
     }
 
     //animals page
@@ -160,7 +160,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String index(Model vars) {
         vars.addAttribute("type_animal", svc.type_animal());
         vars.addAttribute("animals", svc.animalsIsApprovedByAdmin());
-
+        
         svc.filterGender();
         svc.filterSterilized();
         svc.filterAge();
@@ -180,7 +180,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/support_types")
     public String support_types(Model vars) {
         vars.addAttribute("support_types", svc.support_types());
-
+        
         return "support_types";
     }
 
@@ -212,7 +212,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         Type_Animal type_animal = animal.getType_animal();
         vars.addAttribute("animal", animal);
         vars.addAttribute("type_animal", type_animal);
-
+        
         svc.filterGender();
         svc.filterSterilized();
         svc.filterAge();
@@ -227,7 +227,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         vars.addAttribute("animal", animal);
         vars.addAttribute("type_animal", type_animal);
         vars.addAttribute("all_type_animal", svc.type_animal());
-
+        
         return "animal_edit";
     }
 
@@ -245,12 +245,12 @@ public class MyController extends WebMvcConfigurerAdapter {
 //    }
     //add 1 animal
     @RequestMapping(method = RequestMethod.POST, value = "/animals/add")
-    public String addNewAnimal(@RequestParam("file") MultipartFile file, @RequestParam String type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public String addNewAnimal(@RequestParam("file") MultipartFile file, @RequestParam String type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         Type_Animal animalType = svc.findAnimalPK(type_animal);
-
+        
         Long pk_type_animal = animalType.getPk_type_animal();
-
-        Animal animal = svc.addAnimal(pk_type_animal, name, type, gender, color, health_status, weight, breed, relationship_with_human, age, description, sterilized, isApproved);
+        
+        Animal animal = svc.addAnimal(pk_type_animal, name, type, gender, weight, breed, age, description, sterilized, isApproved);
         // Animal animal = svc.addAnimal(pk_type_animal, weight,age);
         svc.filterGender();
         svc.filterSterilized();
@@ -278,9 +278,9 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 animal
     @RequestMapping(method = RequestMethod.POST, value = "/animals/{pk_animal}")
-    public String editAnimal(@PathVariable Long pk_animal, @RequestParam Long pk_type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, Integer age, String description, int sterilized, @RequestParam("file") MultipartFile file) {
+    public String editAnimal(@PathVariable Long pk_animal, @RequestParam Long pk_type_animal, String name, String type, int gender, float weight, String breed, Integer age, String description, int sterilized, @RequestParam("file") MultipartFile file) {
         Animal animal = svc.animal(pk_animal);
-        svc.updateAnimal(pk_animal, pk_type_animal, name, type, gender, color, health_status, weight, breed, relationship_with_human, age, description, sterilized);
+        svc.updateAnimal(pk_animal, pk_type_animal, name, type, gender, weight, breed, age, description, sterilized);
         addImage(file, "animals", animal.getPk_animal());
         return "redirect:/animals/{pk_animal}";
     }
@@ -289,7 +289,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/temp_owners")
     public String temp_owners(Model vars) {
         vars.addAttribute("temp_owners", svc.temp_owners());
-
+        
         return "temp_owners";
     }
 
@@ -297,7 +297,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/owners")
     public String owners(Model vars) {
         vars.addAttribute("owners", svc.owners());
-
+        
         return "owners";
     }
 
@@ -306,7 +306,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String owner(@PathVariable Long pk_owner, Model vars
     ) {
         Owner owner = svc.owner(pk_owner);
-
+        
         vars.addAttribute("owner", owner);
         return "owner";
     }
@@ -323,7 +323,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     //add 1 tempowner
     @RequestMapping(method = RequestMethod.POST, value = "/temp_owners/add")
     public String addNewTempOwner(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, int amount_of_animal) {
-
+        
         TempOwner temp_owner = svc.addTempOwner(name, telephone, address, amount_of_animal);
         addImage(file, "temp_owners", temp_owner.getPk_temp_owner());
         return "redirect:/temp_owners";
@@ -334,7 +334,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String temp_owner(@PathVariable Long pk_temp_owner, Model vars
     ) {
         TempOwner temp_owner = svc.temp_owner(pk_temp_owner);
-
+        
         vars.addAttribute("temp_owner", temp_owner);
         return "temp_owner";
     }
@@ -343,9 +343,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/temp_owners/{pk_temp_owner}/edit")
     public String editTempOwnerPage(@PathVariable Long pk_temp_owner, Model vars) {
         TempOwner temp_owner = svc.temp_owner(pk_temp_owner);
-
+        
         vars.addAttribute("temp_owner", temp_owner);
-
+        
         return "temp_owner_edit";
     }
 
@@ -361,9 +361,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/owners/{pk_owner}/edit")
     public String editOwnerPage(@PathVariable Long pk_owner, Model vars) {
         Owner owner = svc.owner(pk_owner);
-
+        
         vars.addAttribute("owner", owner);
-
+        
         return "owner_edit";
     }
 
@@ -397,7 +397,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/shelters")
     public String shelters(Model vars) {
         vars.addAttribute("shelters", svc.shelters());
-
+        
         return "shelters";
     }
 
@@ -413,7 +413,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/staves")
     public String staves(Model vars) {
         vars.addAttribute("staves", svc.staves());
-
+        
         return "staves";
     }
 
@@ -421,7 +421,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/expenses")
     public String expenses(Model vars) {
         vars.addAttribute("expenses", svc.expenses());
-
+        
         return "expenses";
     }
 
@@ -429,14 +429,14 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/volunteers")
     public String volunteer(Model vars) {
         vars.addAttribute("volunteers", svc.volunteers());
-
+        
         return "volunteers";
     }
 
     //add 1 shelter
     @RequestMapping(method = RequestMethod.POST, value = "/shelters/add")
     public String addNewShelter(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
-
+        
         Shelter shelter = svc.addShelter(name, telephone, address, seat, free_seat, site, email, description);
         addImage(file, "shelters", shelter.getPk_shelter());
         return "redirect:/shelters";
@@ -445,7 +445,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     //add 1 support type
     @RequestMapping(method = RequestMethod.POST, value = "/support_types/add")
     public String addNewSupport_type(@RequestParam String title) {
-
+        
         Support_Type support_type = svc.addSupport_type(title);
         return "redirect:/support_types";
     }
@@ -453,7 +453,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     //add 1 sponsor
     @RequestMapping(method = RequestMethod.POST, value = "/sponsors/add")
     public String addNewSponsor(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, String site, String email, String description, int is_organization) {
-
+        
         Sponsor sponsor = svc.addSponsor(name, telephone, address, site, email, description, is_organization);
         addImage(file, "sponsors", sponsor.getPk_sponsor());
         return "redirect:/sponsors";
@@ -471,7 +471,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     //add 1 expense
     @RequestMapping(method = RequestMethod.POST, value = "/expenses/add")
     public String addNewExpense(@RequestParam String product, int price, String organization, String date_use, String description) {
-
+        
         Expense expense = svc.addExpense(product, price, organization, date_use, description);
         return "redirect:/expenses";
     }
@@ -490,7 +490,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String staff(@PathVariable Long pk_staff, Model vars
     ) {
         Staff staff = svc.staff(pk_staff);
-
+        
         vars.addAttribute("staff", staff);
         return "staff";
     }
@@ -500,7 +500,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String expense(@PathVariable Long pk_expense, Model vars
     ) {
         Expense expense = svc.expense(pk_expense);
-
+        
         vars.addAttribute("expense", expense);
         return "expense";
     }
@@ -510,7 +510,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String profit(@PathVariable Long pk_profit, Model vars
     ) {
         Profit profit = svc.profit(pk_profit);
-
+        
         vars.addAttribute("profit", profit);
         return "profit";
     }
@@ -520,7 +520,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String volunteer(@PathVariable Long pk_volunteer, Model vars
     ) {
         Volunteer volunteer = svc.volunteer(pk_volunteer);
-
+        
         vars.addAttribute("volunteer", volunteer);
         return "volunteer";
     }
@@ -566,9 +566,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/staves/{pk_staff}/edit")
     public String editStaffPage(@PathVariable Long pk_staff, Model vars) {
         Staff staff = svc.staff(pk_staff);
-
+        
         vars.addAttribute("staff", staff);
-
+        
         return "staff_edit";
     }
 
@@ -576,16 +576,16 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/profits/{pk_profit}/edit")
     public String editProfitPage(@PathVariable Long pk_profit, Model vars) {
         Profit profit = svc.profit(pk_profit);
-
+        
         Sponsor sponsor = profit.getSponsor();
         Support_Type support_type = profit.getSupporttype();
         vars.addAttribute("sponsor", sponsor);
         vars.addAttribute("support_type", support_type);
-
+        
         vars.addAttribute("support_types", svc.support_types());
         vars.addAttribute("sponsors", svc.sponsors());
         vars.addAttribute("profit", profit);
-
+        
         return "profit_edit";
     }
 
@@ -593,9 +593,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/volunteers/{pk_volunteer}/edit")
     public String editVolunteerPage(@PathVariable Long pk_volunteer, Model vars) {
         Volunteer volunteer = svc.volunteer(pk_volunteer);
-
+        
         vars.addAttribute("volunteer", volunteer);
-
+        
         return "volunteer_edit";
     }
 
@@ -603,9 +603,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/expenses/{pk_expense}/edit")
     public String editExpensePage(@PathVariable Long pk_expense, Model vars) {
         Expense expense = svc.expense(pk_expense);
-
+        
         vars.addAttribute("expense", expense);
-
+        
         return "expense_edit";
     }
 
@@ -648,7 +648,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String shelter(@PathVariable Long pk_shelter, Model vars
     ) {
         Shelter shelter = svc.shelter(pk_shelter);
-
+        
         vars.addAttribute("shelter", shelter);
         return "shelter";
     }
@@ -658,7 +658,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     public String support_type(@PathVariable Long pk_support_type, Model vars
     ) {
         Support_Type support_type = svc.support_type(pk_support_type);
-
+        
         vars.addAttribute("support_type", support_type);
         return "support_type";
     }
@@ -693,9 +693,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/shelters/{pk_shelter}/edit")
     public String editShelterPage(@PathVariable Long pk_shelter, Model vars) {
         Shelter shelter = svc.shelter(pk_shelter);
-
+        
         vars.addAttribute("shelter", shelter);
-
+        
         return "shelter_edit";
     }
 
@@ -703,9 +703,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/support_types/{pk_support_type}/edit")
     public String editSupport_typePage(@PathVariable Long pk_support_type, Model vars) {
         Support_Type support_type = svc.support_type(pk_support_type);
-
+        
         vars.addAttribute("support_type", support_type);
-
+        
         return "support_type_edit";
     }
 
@@ -713,9 +713,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/sponsors/{pk_sponsor}/edit")
     public String editSponsorPage(@PathVariable Long pk_sponsor, Model vars) {
         Sponsor sponsor = svc.sponsor(pk_sponsor);
-
+        
         vars.addAttribute("sponsor", sponsor);
-
+        
         return "sponsor_edit";
     }
 
@@ -731,7 +731,7 @@ public class MyController extends WebMvcConfigurerAdapter {
     //edit 1 support_type
     @RequestMapping(method = RequestMethod.POST, value = "/support_types/{pk_support_type}")
     public String editShelter(@PathVariable Long pk_support_type, @RequestParam String title) {
-
+        
         svc.updateSupport_type(pk_support_type, title);
         return "redirect:/support_types/{pk_support_type}";
     }
@@ -748,54 +748,47 @@ public class MyController extends WebMvcConfigurerAdapter {
     //get form client
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/json")
-    public Object descIndex(String description) throws IOException {
-
-        Type_Animal animalType = svc.findAnimalPK("Собака");
-
+    public Object descIndex(String species, String name, String breed, String gender, String age, String description, String weight, String sterilize, String image) throws IOException {
+        int animalGender = Integer.parseInt(gender);
+        int animalAge = Integer.parseInt(age);
+        float animalWeight = Float.parseFloat(weight);
+        int animalSterilize = Integer.parseInt(sterilize);
+         
+        Type_Animal animalType = svc.findAnimalPK(species);
+        
         Long pk_type_animal = animalType.getPk_type_animal();
-
-        Animal animal = svc.addAnimal(pk_type_animal, "Sobaka", null, 1, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
+        Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, animalWeight, breed, animalAge, description, animalSterilize, isNotApproved);
+        //Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
         log.info(animal.getPk_animal());
         //Volunteer volunteer = svc.addVolunteer(null, null, 123, null, null, description);
         String myPath = "C:\\testIMG\\static\\img" + File.separator + "temp_animals\\";
-
+        
         File dir = new File(myPath);
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
-        byte[] data = Base64.decodeBase64(description);
+        
+        byte[] data = Base64.decodeBase64(image);
         try (OutputStream stream = new FileOutputStream(myPath + animal.getPk_animal() + ".jpg")) {
             log.info("created:" + stream.toString());
             stream.write(data);
         }
         notification();
-        //ArrayList<JSONObject> jsonArray = new ArrayList<>(); 
-//        JSONArray jsonArray = new JSONArray();
-//        String tag_pk = "pk";
-//        String tag_name = "name";
-//        JSONObject jSONObject;
-//        for (Animal animalToShow : svc.animalsIsApprovedByAdmin()) {
-//            jSONObject = new JSONObject();
-//            jSONObject.put(tag_pk, animalToShow.getPk_animal());
-//            jSONObject.put(tag_name, animalToShow.getName());
-//            jsonArray.add(jSONObject);
-//        }
-
+        
         return null;
-
+        
     }
-
+    
     private static final String extension = ".jpg";
     private final String myPath = "C:\\testIMG\\static\\img\\";
-
+    
     String tmpfolder;
-
+    
     private void addImage(MultipartFile file, String folderName, Long pk) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
- 
+                
                 String folder = myPath + folderName + File.separator;
                 File dir = new File(folder);
                 if (!dir.exists()) {
@@ -807,13 +800,15 @@ public class MyController extends WebMvcConfigurerAdapter {
                 log.info("File: " + fileImage);
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(fileImage));
-
+                
                 stream.write(bytes);
-
+                
                 stream.close();
                 //resize Uploaded image
-                makeThumbnails(fileImage, folder, pk);
-
+                if (folderName.equals("animals")) {
+                    makeThumbnails(fileImage, folder, pk);
+                }
+                
             } catch (Exception e) {
                 //log.info("Server File Location=" + serverFile.getAbsolutePath());
                 log.info("You failed to upload " + tmpfolder + " => " + e.getMessage());
@@ -821,7 +816,7 @@ public class MyController extends WebMvcConfigurerAdapter {
             }
         }
     }
-
+    
     private void makeThumbnails(File fileImg, String folder, Long pk) throws IOException {
         BufferedImage bi = ImageIO.read(fileImg);
         BufferedImage resizedImage = Scalr.resize(bi, 150);
@@ -832,16 +827,16 @@ public class MyController extends WebMvcConfigurerAdapter {
         log.info("File thumb:" + outputImage);
         ImageIO.write(resizedImage, "jpg", outputImage);
     }
-
+    
     public String getProgramPath2() throws UnsupportedEncodingException {
         URL url = MyController.class.getProtectionDomain().getCodeSource().getLocation();
         String jarPath = URLDecoder.decode(url.getPath(), "UTF-8");
-
+        
         String parentPath = new File(jarPath).getParentFile().getPath();
         log.info("jarPath" + parentPath);
         return parentPath;
     }
-
+    
     private void deleteImage(String folderName, Long pk) {
         String folder = myPath + folderName; //  C:\\testIMG\\static\\img\\foldername
         File file = new File(folder + File.separator + pk + extension); //  C:\\testIMG\\static\\img\\foldername\\pk.jpg
@@ -849,7 +844,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         if (file.delete()) {
             log.info(file.getAbsolutePath() + " is Deleted");
         } else {
-
+            
             log.info(file.getAbsolutePath() + " Delete operation is failed.");
         }
         if (folderName.equals("animals")) {
@@ -858,20 +853,20 @@ public class MyController extends WebMvcConfigurerAdapter {
             if (fileThumbnail.delete()) {
                 log.info(fileThumbnail.getAbsolutePath() + " Thumbnail is Deleted");
             } else {
-
+                
                 log.info(fileThumbnail.getAbsolutePath() + " Thumbnail is Delete operation is failed.");
             }
         }
-
+        
     }
-
+    
     private void replaceImage(String source, String target) throws IOException {
         File fileFrom = new File(source);
         File fileTo = new File(target);
         Files.move(fileFrom.toPath(), fileTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
+        
     }
-
+    
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("static/**")

@@ -15,11 +15,8 @@ public class Type_AnimalHelper {
 
     private String name;
     private String type;
-    private String color;
-    private String health_status;
     private float weight;
     private String breed;
-    private String relationship_with_human;
     private int age;
 
     private String description;
@@ -69,26 +66,20 @@ public class Type_AnimalHelper {
         this.setType(animal.getType());
         this.setAge(animal.getAge());
         this.setBreed(animal.getBreed());
-        this.setColor(animal.getColor());
         this.setGender(animal.getGender());
-        this.setHealth_status(animal.getHealth_status());
-        this.setRelationship_with_human(animal.getRelationship_with_human());
         this.setSterilized(animal.getSterilized());
         this.setWeight(animal.getWeight());
         this.setDescription(animal.getDescription());
         this.setTypeanimal(animal.getType_animal().getTitle());
     }
 
-    public Type_AnimalHelper(String type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public Type_AnimalHelper(String type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         this.typeanimal = type_animal;
         this.name = name;
         this.type = type;
         this.gender = gender;
-        this.color = color;
-        this.health_status = health_status;
         this.weight = weight;
         this.breed = breed;
-        this.relationship_with_human = relationship_with_human;
         this.age = age;
 
         this.description = description;
@@ -116,24 +107,12 @@ public class Type_AnimalHelper {
         return gender;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public String getHealth_status() {
-        return health_status;
-    }
-
     public float getWeight() {
         return weight;
     }
 
     public String getBreed() {
         return breed;
-    }
-
-    public String getRelationship_with_human() {
-        return relationship_with_human;
     }
 
     public int getAge() {
@@ -152,16 +131,13 @@ public class Type_AnimalHelper {
         return type;
     }
 
-    public void updateAnimal(String type_animal, String name, String type, int gender, String color, String health_status, float weight, String breed, String relationship_with_human, int age, String description, int sterilized) {
+    public void updateAnimal(String type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         this.typeanimal = type_animal;
         this.name = name;
         this.type = type;
         this.gender = gender;
-        this.color = color;
-        this.health_status = health_status;
         this.weight = weight;
         this.breed = breed;
-        this.relationship_with_human = relationship_with_human;
         this.age = age;
 
         this.description = description;
@@ -185,24 +161,12 @@ public class Type_AnimalHelper {
         this.type = type;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setHealth_status(String health_status) {
-        this.health_status = health_status;
-    }
-
     public void setWeight(float weight) {
         this.weight = weight;
     }
 
     public void setBreed(String breed) {
         this.breed = breed;
-    }
-
-    public void setRelationship_with_human(String relationship_with_human) {
-        this.relationship_with_human = relationship_with_human;
     }
 
     public void setAge(int age) {

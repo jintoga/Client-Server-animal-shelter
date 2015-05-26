@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    
+
     //check EMPTY INPUT
     $("#addFrom").submit(function () {
         var isFormValid = true;
@@ -20,7 +20,7 @@ $(document).ready(function () {
 
         return isFormValid;
     });
-    
+
     //notifications from client
     $.ajax({
         type: "POST",
@@ -37,7 +37,7 @@ $(document).ready(function () {
     // Check if body height is higher than window height :)
     $('.approveAnimal').click(function () {
 
-        alert("I approve this shit");
+        alert("A New Animal has been added!");
 
     });
 
@@ -87,11 +87,11 @@ $(document).ready(function () {
 
                 $("#message").append('<div class="col-sm-6 col-md-4 myfilter getRid">'
                         + '<form class="getRidOfIt" method="GET" action="/animals/' + data[item].pk_animal + '">'
-                        + '<button class="btn-info btn-sm"> Подробнее </button>'
+                        + '<button class="btn btn-info btn-xs"> Подробнее </button>'
                         + '</form>'
                         + '<div id="id_thumbnail" class="thumbnail"'
                         + 'href="/animals/' + data[item].pk_animal + '">'
-                        + '<img class="img-responsive" height="350" width="500" src="/img/animals/' + data[item].pk_animal + '"/>'
+                        + '<img class="img-responsive" height="350" width="500" src="/img/animals/' + data[item].pk_animal + '.jpg' + '"/>'
                         + '<div id="id_caption" class="caption">'
                         + ' <center><h3>Вид: <span class="myfilter2">'
                         + data[item].type_animal + '</span></h3></center> '

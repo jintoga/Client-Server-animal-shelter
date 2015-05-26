@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/spinnerSpecies"
                     android:drawSelectorOnTop="true"
-                    android:entries="@array/array_item_test_for_spinner"
+                    android:entries="@array/array_item_for_spinner_species"
                     android:focusable="true" />
             </TableRow>
 
@@ -241,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinnerAge"
-                    android:entries="@array/array_item_test_for_spinner" />
+                    android:entries="@array/array_item_for_spinner_age" />
             </TableRow>
 
             <TableRow
@@ -258,7 +258,7 @@
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:id="@+id/editTextWeight" />
             </TableRow>
 
