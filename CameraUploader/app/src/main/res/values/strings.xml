@@ -16,10 +16,31 @@
     </string-array>
 
     <string-array name="array_item_for_spinner_age">
-        <item></item>
-        <item>&lt;1 года</item>
+        <item>&lt; 1 года</item>
         <item>1-3 лет</item>
         <item>3-5 лет</item>
         <item>&gt;5 лет</item>
     </string-array>
+
+    <string-array name="array_item_for_filter_species">
+        <item>--Все--</item>
+        <item>Собака</item>
+        <item>Кот</item>
+        <item>Прочие</item>
+    </string-array>
+
+    <string-array name="array_item_for_filter_age">
+        <item>--Все--</item>
+        <item>&lt; 1 Года</item>
+        <item>1 - 3 Лет</item>
+        <item>3 - 5 Лет</item>
+        <item>&gt; 5 Лет</item>
+    </string-array>
+
+    <string-array name="array_item_for_filter_gender">
+        <item>--Все--</item>
+        <item>Мальчик</item>
+        <item>Девочка</item>
+    </string-array>
+
 </resources>

@@ -251,18 +251,16 @@ public class MainActivity extends Activity {
             animalSpecies = spinnerSpecies.getSelectedItem().toString();
             animalName = editTextName.getText() + "";
             animalBreed = editTextBreed.getText() + "";
-            //animalGender is assigned in addEvents() Method
             if (radioGroupGender.getCheckedRadioButtonId() == R.id.radioButtonMale) {
                 animalGender = 1;
-            } else if (radioGroupGender.getCheckedRadioButtonId() == R.id.radioButtonMale) {
+            } else if (radioGroupGender.getCheckedRadioButtonId() == R.id.radioButtonFemale) {
                 animalGender = 2;
             }
-            animalAge = spinnerAge.getSelectedItemPosition();
+            animalAge = spinnerAge.getSelectedItemPosition() + 1;
             animalWeight = editTextWeight.getText() + "";
             if (animalWeight.isEmpty()) {
                 animalWeight = "0";
             }
-            //animalSterilize is assigned addEvents () Method
             if (checkBoxSterilize.isChecked()) {
                 animalSterilize = 1;
             } else if (!checkBoxSterilize.isChecked()) {

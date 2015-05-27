@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
 
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:touchscreenBlocksFocus="false"
+    android:background="@drawable/backgroundrepeat">
 
     <Button
         android:layout_width="wrap_content"
@@ -26,30 +28,65 @@
         android:layout_alignLeft="@+id/layoutforImgBtnUpload"
         android:layout_alignStart="@+id/layoutforImgBtnUpload" />
 
-
-    <ImageButton
+    <LinearLayout
+        android:id="@+id/linearLayoutBtnCapture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnCapture"
-        android:src="@drawable/capture"
-        android:background="@null"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_alignBottom="@+id/btnBrowse"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBrowse"
-        android:background="@null"
-        android:src="@drawable/browse"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
-        android:layout_below="@+id/btnListAnimals"
+        android:orientation="vertical"
+        android:layout_marginBottom="25dp"
+        android:layout_alignBottom="@+id/Imageprev"
         android:layout_alignRight="@+id/btnListAnimals"
-        android:layout_alignEnd="@+id/btnListAnimals" />
+        android:layout_alignEnd="@+id/btnListAnimals"
+        android:layout_marginRight="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCapture"
+            android:src="@drawable/capture"
+            android:layout_gravity="center"
+            android:background="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Фотографировать"
+            android:layout_gravity="center"
+            android:id="@+id/textView13"
+            android:textColor="#ff000000"
+            android:textSize="10dp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBtnBrowse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/btnListAnimals"
+        android:layout_alignRight="@+id/linearLayoutBtnCapture"
+        android:layout_alignEnd="@+id/linearLayoutBtnCapture"
+        android:layout_alignLeft="@+id/linearLayoutBtnCapture"
+        android:layout_alignStart="@+id/linearLayoutBtnCapture">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnBrowse"
+            android:background="@null"
+            android:src="@drawable/browse" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Выбрать Фото"
+            android:layout_gravity="center"
+            android:id="@+id/textView14"
+            android:textSize="10dp"
+            android:textColor="#ff000000"
+            android:typeface="monospace" />
+    </LinearLayout>
 
 
     <TableLayout
@@ -286,7 +323,7 @@
             <TableRow>
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="Другие Информации:"
                     android:textColor="#ff000000"

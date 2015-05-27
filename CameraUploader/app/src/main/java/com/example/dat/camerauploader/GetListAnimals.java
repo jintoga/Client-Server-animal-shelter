@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -20,8 +24,13 @@ public class GetListAnimals extends Activity {
     GridView gridview;
     public CustomAdapterGridview customAdapterGridview = null;
     private ArrayList<Animal> listAnimal = new ArrayList<>();
-    Button btnBack;
 
+    EditText editTextSearch;
+    public static Spinner spinnerFilterSpecies, spinnerFilterGender, spinnerFilterAge;
+
+    public static boolean searchOn = false;
+    public static String filterSpecies, filterGender, filterAge;
+    CharSequence all = "--Все--";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,35 @@ public class GetListAnimals extends Activity {
 
     public void getID() {
         gridview = (GridView) findViewById(R.id.gridView);
-        btnBack = (Button) findViewById(R.id.buttonBack);
+        editTextSearch = (EditText) findViewById(R.id.editTextSearch);
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                searchOn = true;
+                GetListAnimals.this.customAdapterGridview.getFilter().filter(charSequence);
+                spinnerFilterSpecies.setSelection(0);
+                spinnerFilterGender.setSelection(0);
+                spinnerFilterAge.setSelection(0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        spinnerFilterSpecies = (Spinner) findViewById(R.id.spinnerFilterSpecies);
+        spinnerFilterGender = (Spinner) findViewById(R.id.spinnerFilterGender);
+        spinnerFilterAge = (Spinner) findViewById(R.id.spinnerFilterAge);
+
+       /* filterWithSpinnersSpecies = false;
+        filterWithSpinnersGender = false;
+        filterWithSpinnersAge = false;*/
     }
 
 
@@ -60,13 +97,50 @@ public class GetListAnimals extends Activity {
                 GetListAnimals.this.startActivity(intent);
             }
         });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        spinnerFilterSpecies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filterSpecies = spinnerFilterSpecies.getSelectedItem().toString();
+                CharSequence charSequence = spinnerFilterSpecies.getSelectedItem().toString();
+
+                GetListAnimals.this.customAdapterGridview.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
+
+        spinnerFilterGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filterGender = spinnerFilterGender.getSelectedItem().toString();
+                CharSequence charSequence = spinnerFilterGender.getSelectedItem().toString();
+
+                GetListAnimals.this.customAdapterGridview.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerFilterAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filterAge = spinnerFilterAge.getSelectedItem().toString();
+                CharSequence charSequence = spinnerFilterAge.getSelectedItem().toString();
+
+                GetListAnimals.this.customAdapterGridview.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     public ArrayList<Animal> getListAnimal() {

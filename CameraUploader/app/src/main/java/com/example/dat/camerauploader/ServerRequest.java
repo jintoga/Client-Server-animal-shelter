@@ -32,6 +32,14 @@ public class ServerRequest {
 
     private final String TAG_NAME = "name";
     private final String TAG_PK = "pk";
+    private final String TAG_SPECIES = "species";
+    private final String TAG_BREED = "breed";
+    private final String TAG_AGE = "age";
+    private final String TAG_GENDER = "gender";
+    private final String TAG_WEIGHT = "weight";
+    private final String TAG_STERILIZE = "sterilize";
+    private final String TAG_DESCRIPTION = "description";
+
     private final String TAG_IMAGE = "image";
     private GetListAnimals getListAnimals = null;
     private MainActivity activity = null;
@@ -128,8 +136,18 @@ public class ServerRequest {
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String name = jsonObject.getString(TAG_NAME);
+
                             String pk = jsonObject.getString(TAG_PK);
+                            String name = jsonObject.getString(TAG_NAME);
+                            String species = jsonObject.getString(TAG_SPECIES);
+                            String breed = jsonObject.getString(TAG_BREED);
+                            String gender = jsonObject.getString(TAG_GENDER);
+                            String age = jsonObject.getString(TAG_AGE);
+                            String weight = jsonObject.getString(TAG_WEIGHT);
+                            String sterilize = jsonObject.getString(TAG_STERILIZE);
+                            String description = jsonObject.getString(TAG_DESCRIPTION);
+
+
                             //String image = jsonObject.getString(TAG_IMAGE);
 
                            /* byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
@@ -137,7 +155,7 @@ public class ServerRequest {
 
                             getListAnimals.getListBitmap().add(decodedByte);*/
 
-                            Animal animal = new Animal(pk, name, null);
+                            Animal animal = new Animal(pk, species, name, breed, gender, age, weight, sterilize, description);
                             /*try {
                                 animal.convertImage();
                             } catch (IOException e) {
