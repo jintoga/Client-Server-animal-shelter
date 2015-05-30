@@ -4,150 +4,212 @@
 
 
     <th:block layout:fragment="rows">
-        <form id="addFrom" method="POST" th:action="'/animals/add'" enctype="multipart/form-data">
+        <br/><br/> 
+        <div class="col-lg-3" >
 
-            <table class="table">
-                <form class="form-horizontal"  >
-                    <h5>Вид:
-                        <select  name="type_animal" id="id_type_animal">
-                            <c:forEach th:each="item: ${type_animal}">
-                                <option   th:text="${item.title}"></option>
-                            </c:forEach>
-                        </select> 
-                    </h5>
-                </form>
-                <div class="caption  myForm has-error">
-                    <input  style="width: 160px" id="inputError" name="name" placeholder="Имя"    />
-                </div>					
-                <div class="caption" > 
+            <br/><br/> 
+            <div id="makeBorder" style="padding: 25px;border: #9d9d9d groove 1px; border-radius: 15px">
+                 
+                <div><strong>Добавить Животного:</strong></div>
+                <br/>
+                <form id="addFrom" method="POST" th:action="'/animals/add'" enctype="multipart/form-data">
 
-
-                    <h5>Пол:
-                        <select name="gender" >
-                            <option value="1">Мальчик</option>
-                            <option value="2">Девочка</option>
-                        </select> 
-                    </h5>
-
-                </div>	
-                <div class="caption">
-                    <input  name="type" placeholder="Тип (бесхозная,...)"  />
-                </div>	
-         	
-                <div class="caption">
-                    <input type="number"  name="weight" placeholder="Размер(вес)" id="id_weight" />
-                </div>	
-                <div class="caption">
-                    <input  name="breed" placeholder="Порода"  />
-                </div>	
-            	
-                <div class="caption"> 
-                    <h5>Возраст:
-                        <select name="age" id="id_age">
-                            <option value="1">&lt; 1 года</option>
-                            <option value="2">1-3 лет</option>
-                            <option value="3">3-5 лет</option>
-                            <option value="4">&gt; 5 лет</option>
-                        </select> 
-                    </h5>
-                </div>
-                <div class="caption" > 
-
-                    <h5>Стериализован:
-                        <select name="sterilized" id="id_sterilized">
-                            <option value="1">Да</option>
-                            <option value="2">Нет</option>
-                        </select> 
-                    </h5>
-
-                </div>
-                <span class="btn btn-default">
-                    Вставить картинку <input type="file" name="file" accept=".jpg,.jpeg,.png"/>
-                </span>
-                <div class="span6">
-                    <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
-                </div>
-            </table>
-            <button type="submit" class="btn btn-primary" id="myButton">Добавить</button> 
-            <button type="reset" class="btn btn-default">Очистить поля</button> 
-        </form>
+                    <table class="table">
+                        <form class="form-horizontal"  >
+                            <h5>Вид:
+                                <select  name="type_animal" id="id_type_animal" style="margin-left:  45px"  >
+                                    <c:forEach th:each="item: ${type_animal}">
+                                        <option   th:text="${item.title}"></option>
+                                    </c:forEach>
+                                </select> 
+                            </h5>
+                        </form>
+                        <div class="caption  myForm has-error">
+                            <input  style="width: 160px" id="inputError" name="name" placeholder="Имя"    />
+                        </div>					
+                        <div style="margin-top: 5px" class="caption" > 
 
 
-        <br/><br/>
+                            <h5>Пол:
+                                <select name="gender" style="margin-left:  40px"  >
+                                    <option value="1">Мальчик</option>
+                                    <option value="2">Девочка</option>
+                                </select> 
+                            </h5>
 
-        <div class="caption">
+                        </div>	
+                        <div style="margin-top: 5px" class="caption">
+                            <input  style="width: 160px" name="type" placeholder="Тип (бесхозная,...)"  />
+                        </div>	
 
-            <strong> Фильтры:</strong> 
-        </div>
-        <br/> 
+                        <div style="margin-top: 5px" class="caption">
+                            <input style="width: 160px" type="number"  name="weight" placeholder="Размер(вес)" id="id_weight" />
+                        </div>	
+                        <div style="margin-top: 5px" class="caption">
+                            <input  style="width: 160px" name="breed" placeholder="Порода"  />
+                        </div>	
 
-        <div class="caption">
-            <span class="col-sm-3" >
+                        <div style="margin-top: 5px"  class="caption"> 
+                            <h5>Возраст:
+                                <select style="margin-left:  15px" name="age" id="id_age">
+                                    <option value="1">&lt; 1 года</option>
+                                    <option value="2">1-3 лет</option>
+                                    <option value="3">3-5 лет</option>
+                                    <option value="4">&gt; 5 лет</option>
+                                </select> 
+                            </h5>
+                        </div>
+                        <div style="margin-top: 5px" class="caption" > 
 
-                <select id="filter1" class="form-control">
-                    <option value="0">Все</option>
-                    <c:forEach th:each="item: ${type_animal}">
-                        <option    th:value="${item.pk_type_animal}" th:text="${item.title}"></option>
-                    </c:forEach>
-                </select>
-
-            </span>
-            <span class="col-sm-3" >
-
-                <select id="filter2" class="form-control">
-                    <option value="0">Все</option>
-                    <option value="1">Мальчик</option>
-                    <option value="2">Девочка</option>
-                </select>
-
-            </span>
-            <span class="col-sm-3" >
-
-                <select id="filter3" class="form-control">
-                    <option value="0">Все</option>
-                    <option value="1">&lt; 1 года</option>
-                    <option value="2">1-3 лет</option>
-                    <option value="3">3-5 лет</option>
-                    <option value="4">&gt; 5 лет</option>
-                </select>
-
-            </span>				
-        </div>
-        <br/><br/><br/>
-
-        <tbody>
-            <div id="message" >
-                <a class="thumbnai">
-                </a>
-
-            </div>
-            <tr th:each="animal: ${animals}">
-
-                <div class="col-sm-6 col-md-4 ">
-
-                    <form class="getRidOfIt" method="GET" th:action="@{'/animals/' + ${animal.pk_animal}}">
-                        <button class="btn btn-info btn-xs">Подробнее</button> 
-                    </form>
-
-                    <div class="thumbnail getRidOfIt">
-                        <img class="img-responsive" height="350" width="500" th:src="@{'/img/animals/' + ${animal.pk_animal}} + '.jpg'"  />   
-                        <div class="caption">
-                            <center><h3>Вид: <span class="myfilter2" th:text="${animal.type_animal.title}"></span></h3></center>
-                            <center><h4>Имя: <strong><span th:text="${animal.name}"></span></strong></h4></center>
-                            <center><h6>Тип: <span th:text="${animal.type}"></span></h6></center>
-                            <center><h6>Пол: <span th:text="${animal.showGender}"></span></h6></center> 
-                            <center><h6>вес: <span th:text="${animal.weight}"></span></h6></center>
-                            <center><h6>Порода: <span th:text="${animal.breed}"></span></h6></center> 
-                            <center><h6>Стериализован: <span th:text="${animal.sterilized_status}"></span></h6></center>
-                            <center><h6>Возраст: <span th:text="${animal.showAge}"></span></h6></center>
-                            <center><h6>description: <span th:text="${animal.description}"></span></h6></center>
+                            <h5>Стериализован:
+                                <select name="sterilized" id="id_sterilized">
+                                    <option value="1">Да</option>
+                                    <option value="2">Нет</option>
+                                </select> 
+                            </h5>
 
                         </div>
+                        <div   class="btn btn-default">
+
+                            Вставить картинку <input style="width: 135px" type="file" name="file" accept=".jpg,.jpeg,.png"/>
+
+                        </div>
+
+                        <div style="margin-top: 5px" class="span6">
+                            <textarea style="width: 160px; resize: none" class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
+                        </div>
+                    </table>
+                    <button style="width: 76px; " type="submit" class="btn btn-primary" id="myButton">Добавить</button> 
+                    <button style="width: 110px" type="reset" class="btn btn-default">Очистить поля</button> 
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-offset-3">
+            <div class="caption" style="margin-left:  50px; ">
+
+                <strong> Фильтры:</strong> 
+            </div>
+            <br/> 
+
+            <div class="caption">
+                <span class="col-sm-3" >
+
+                    <select id="filter1" class="form-control">
+                        <option value="0">Вид животных</option>
+                        <c:forEach th:each="item: ${type_animal}">
+                            <option    th:value="${item.pk_type_animal}" th:text="${item.title}"></option>
+                        </c:forEach>
+                    </select>
+
+                </span>
+                <span class="col-sm-3" >
+
+                    <select id="filter2" class="form-control">
+                        <option value="0">Пол</option>
+                        <option value="1">Мальчик</option>
+                        <option value="2">Девочка</option>
+                    </select>
+
+                </span>
+                <span class="col-sm-3" >
+
+                    <select id="filter3" class="form-control">
+                        <option value="0">Возраст</option>
+                        <option value="1">&lt; 1 года</option>
+                        <option value="2">1-3 лет</option>
+                        <option value="3">3-5 лет</option>
+                        <option value="4">&gt; 5 лет</option>
+                    </select>
+
+                </span>				
+            </div>
+            <br/><br/><br/>
+
+            <tbody>
+                <!--                <div id="message" >
+                                    <a class="thumbnai">
+                                    </a>
+                
+                                </div>-->
+                <table class="table" id="message">
+                    <tr  >
+                        <th>Фото</th>
+                        <th>Вид</th>
+                        <th>Кличка</th>
+                        <th>Пол</th>
+                        <th>Возраст</th>
+                        <th></th>
+
+                    </tr> 
+
+                    <tr  th:each="animal: ${animals}">
+
+                        <tr class="getRidOfIt">
+                            <td> <div style="height: 70px; width: 70px"><a class="showModalAnimal" th:attr="data-id=${animal.pk_animal}" ><img  class="img" style="cursor: pointer;max-height: 100%; max-width: 100%"  th:src="@{'/img/animals/' + ${animal.pk_animal}} + '.jpg'"  /></a></div></td>
+                            <td> <h4 class="addIconHere" ><span class="myfilter2 myIcon" th:text="${animal.type_animal.title}"></span></h4></td>
+                            <td><h4><span th:text="${animal.name}"></span></h4></td>
+                            <td><h4><span th:text="${animal.showGender}"></span></h4></td>
+                            <td><h4><span th:text="${animal.showAge}"></span></h4></td>
+                            <td>
+                                <form class="getRidOfIt" method="GET" th:action="@{'/animals/' + ${animal.pk_animal}}">
+                                    <button class="btn btn-info btn-xs">Подробнее</button> 
+                                </form>
+                            </td>
+                        </tr>
+                    </tr>
+
+
+                </table>
+                <!--                <tr th:each="animal: ${animals}">
+                
+                                    <div class="col-sm-6 col-md-4 ">
+                
+                                        <form class="getRidOfIt" method="GET" th:action="@{'/animals/' + ${animal.pk_animal}}">
+                                            <button class="btn btn-info btn-xs">Подробнее</button> 
+                                        </form>
+                
+                                        <div class="thumbnail getRidOfIt">
+                                            <img class="img-responsive" height="350" width="500" th:src="@{'/img/animals/' + ${animal.pk_animal}} + '.jpg'"  />   
+                                            <div class="caption">
+                                                <center><h3>Вид: <span class="myfilter2" th:text="${animal.type_animal.title}"></span></h3></center>
+                                                <center><h4>Имя: <strong><span th:text="${animal.name}"></span></strong></h4></center>
+                                                <center><h6>Тип: <span th:text="${animal.type}"></span></h6></center>
+                                                <center><h6>Пол: <span th:text="${animal.showGender}"></span></h6></center> 
+                                                <center><h6>вес: <span th:text="${animal.weight}"></span></h6></center>
+                                                <center><h6>Порода: <span th:text="${animal.breed}"></span></h6></center> 
+                                                <center><h6>Стериализован: <span th:text="${animal.sterilized_status}"></span></h6></center>
+                                                <center><h6>Возраст: <span th:text="${animal.showAge}"></span></h6></center>
+                                                <center><h6>description: <span th:text="${animal.description}"></span></h6></center>
+                
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                </tr>-->
+            </tbody>
+        </div>
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog ">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="modalHeader"></h4>
                     </div>
+                    <div class="modal-body">
+                        <div id="modalContent" style="display:none;">
+
+                        </div>
+                    </div> 
                 </div>
 
-            </tr>
-        </tbody>
+            </div>
+        </div>
+
+
     </th:block>
     <script>
         document.title = "Animals";

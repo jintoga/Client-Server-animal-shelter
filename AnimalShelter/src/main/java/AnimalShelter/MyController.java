@@ -15,6 +15,7 @@ import AnimalShelter.Core.Staff;
 import AnimalShelter.Core.Support_Type;
 import AnimalShelter.Core.TempOwner;
 import AnimalShelter.Core.Type_Animal;
+import AnimalShelter.Core.Type_AnimalHelper;
 import AnimalShelter.Core.Volunteer;
 import AnimalShelter.Services.MyService;
 import java.awt.image.BufferedImage;
@@ -30,6 +31,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
@@ -234,6 +238,26 @@ public class MyController extends WebMvcConfigurerAdapter {
         svc.filterSterilized();
         svc.filterAge();
         return "animal";
+    }
+
+    //show Modal Image animal
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/animals/{pk_animal}/showAnimal")
+    public Object animal(Long pk_animal) {
+        Animal animal = svc.animal(pk_animal);
+        Type_AnimalHelper animal_temp = new Type_AnimalHelper(animal);
+
+        return animal_temp;
+    }
+
+    //show Modal Image and infor temp animal
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/animals/{pk_animal}/showTempAnimal")
+    public Object temp_animal(Long pk_animal) {
+        Animal animal = svc.animal(pk_animal);
+        Type_AnimalHelper animal_temp = new Type_AnimalHelper(animal);
+
+        return animal_temp;
     }
 
     //edit animal page
@@ -776,6 +800,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         Long pk_type_animal = animalType.getPk_type_animal();
         Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, animalWeight, breed, animalAge, description, animalSterilize, isNotApproved);
         //Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
+
         log.info(animal.getPk_animal());
         //Volunteer volunteer = svc.addVolunteer(null, null, 123, null, null, description);
         String myPath = "C:\\testIMG\\static\\img" + File.separator + "temp_animals\\";

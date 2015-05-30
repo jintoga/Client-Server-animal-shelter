@@ -21,7 +21,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "animal")
-
 public class Animal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +51,15 @@ public class Animal implements Serializable {
     private String showGender;
     private String sterilized_status;
     private String showAge;
+    private String dateReceived;
+
+    public String getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(String dateReceived) {
+        this.dateReceived = dateReceived;
+    }
 
     public String getShowAge() {
         return showAge;
@@ -163,4 +171,13 @@ public class Animal implements Serializable {
     public void setIs_approved(int is_approved) {
         this.isapproved = is_approved;
     }
+
+    public Type_Animal getTypeanimal() {
+        return typeanimal;
+    }
+
+    public void setTypeanimal(Type_Animal typeanimal) {
+        this.typeanimal = typeanimal;
+    }
+
 }

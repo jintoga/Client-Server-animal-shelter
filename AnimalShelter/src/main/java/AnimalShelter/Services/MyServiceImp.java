@@ -29,6 +29,7 @@ import AnimalShelter.Repositories.TempOwnerRepository;
 import AnimalShelter.Repositories.TypeAnimalRepository;
 import AnimalShelter.Repositories.VolunteerRepository;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -124,6 +125,11 @@ public class MyServiceImp implements MyService {
         Animal animal = new Animal(type_animal, name, type, gender, weight, breed, age, description, sterilized);
         if (isApproved) {
             animal.setIs_approved(isApprovedByAdmin);
+        } else {
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm dd/MM/yyyy");
+            Date date = new Date();
+            System.out.println("Received new animal in:" + dateFormat.format(date));
+            animal.setDateReceived(dateFormat.format(date));
         }
         return animals.save(animal);
     }
