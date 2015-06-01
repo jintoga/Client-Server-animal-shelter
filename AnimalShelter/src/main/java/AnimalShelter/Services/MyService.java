@@ -29,6 +29,8 @@ public interface MyService {
     public static final int isApprovedByAdmin = 2;
     public static final int isWaitApprovedByAdmin = 0;
 
+    Collection<Animal> animalsIsLost(String isLost);
+
     Collection<Animal> animalsIsApprovedByAdmin();
 
     Collection<Animal> animalsWaitForApprove();
@@ -75,7 +77,9 @@ public interface MyService {
 
     public Expense addExpense(String product, int price, String organization, String date_use, String description);
 
-    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved);
+    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved, String phoneNumber);
+
+    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber);
 
     public Type_Animal findAnimalPK(String type_animal);
 

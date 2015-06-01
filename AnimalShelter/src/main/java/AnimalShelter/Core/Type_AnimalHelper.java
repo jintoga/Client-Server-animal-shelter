@@ -31,6 +31,15 @@ public class Type_AnimalHelper {
     private String sterilized_status;
 
     private String showAge;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getShowAge() {
         return showAge;

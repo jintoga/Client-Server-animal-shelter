@@ -120,17 +120,39 @@ public class MyServiceImp implements MyService {
     }
 
     @Override
-    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved) {
+    public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved, String phoneNumber) {
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
         Animal animal = new Animal(type_animal, name, type, gender, weight, breed, age, description, sterilized);
+        animal.setType(type);
+        if (phoneNumber != null) {
+            animal.setPhoneNumber(phoneNumber);
+        }
         if (isApproved) {
             animal.setIs_approved(isApprovedByAdmin);
         } else {
             DateFormat dateFormat = new SimpleDateFormat("hh:mm dd/MM/yyyy");
             Date date = new Date();
             System.out.println("Received new animal in:" + dateFormat.format(date));
+            animal.setIs_approved(isWaitApprovedByAdmin);
             animal.setDateReceived(dateFormat.format(date));
         }
+        return animals.save(animal);
+    }
+
+    @Override
+    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber) {
+        Type_Animal type_animal = type_animals.getOne(pk_type_animal);
+        Animal animal = new Animal(type_animal, type, description);
+
+        if (phoneNumber != null) {
+            animal.setPhoneNumber(phoneNumber);
+        }
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm dd/MM/yyyy");
+        Date date = new Date();
+        System.out.println("Received new animal in:" + dateFormat.format(date));
+        animal.setIs_approved(isWaitApprovedByAdmin);
+        animal.setDateReceived(dateFormat.format(date));
+
         return animals.save(animal);
     }
 
@@ -476,6 +498,11 @@ public class MyServiceImp implements MyService {
         Animal animal = animal(id);
         animal.setIs_approved(isApprovedByAdmin);
         animals.save(animal);
+    }
+
+    @Override
+    public Collection<Animal> animalsIsLost(String isLost) {
+        return animals.findByType(isLost);
     }
 
 }

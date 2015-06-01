@@ -16,11 +16,10 @@
                 <th>Время получения</th>
                 <th>Фото</th>
                 <th>Вид</th>
-                <th>Кличка</th>
-                <th>Пол</th>
+                <th>Тип</th> 
                 <th>Контактный Номер</th>
                 <th></th>
-                
+                <th></th>
 
             </tr>
             <tr th:each="animal: ${animals}">
@@ -28,9 +27,8 @@
                     <td><span th:text="${animal.dateReceived}"></span></td>
                     <td> <div style="height: 70px; width: 70px"><a class="showModalTempAnimal" th:attr="data-id=${animal.pk_animal}" ><img class="img-responsive" style="cursor: pointer; max-height: 100%; max-width: 100%"  th:src="@{'/img/temp_animals/' + ${animal.pk_animal} + '.jpg'}"  /></a></div></td>
                     <td><span class="myIcon" th:text="${animal.type_animal.title}"></span></td>
-                    <td><span th:text="${animal.name}"></span></td>
-                    <td><span th:text="${animal.showGender}"></span></td>
-                    <td><span th:text="${animal.showGender}"></span></td>
+                    <td><span th:text="${animal.type}"></span></td> 
+                    <td> <span style="margin-left: 20px" th:text="${animal.phoneNumber}"></span>  </td>
                     <td>
                         <form  style="float: right" method="POST" th:action="'/animals/' + ${animal.pk_animal}+'/approve'"  >
                             <button type="submit" class="approveAnimal btn btn-success" style="float: right">Утвердить</button>

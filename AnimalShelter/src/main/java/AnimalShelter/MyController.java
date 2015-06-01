@@ -74,6 +74,9 @@ public class MyController extends WebMvcConfigurerAdapter {
     private final String tag_description = "description";
     private final String tag_image = "image";
 
+    private final String typeLost = "Потерянное";
+    private final String typeHomeless = "Бездомное";
+
     @Autowired
     private MyService svc;
 
@@ -291,7 +294,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
         Long pk_type_animal = animalType.getPk_type_animal();
 
-        Animal animal = svc.addAnimal(pk_type_animal, name, type, gender, weight, breed, age, description, sterilized, isApproved);
+        Animal animal = svc.addAnimal(pk_type_animal, name, type, gender, weight, breed, age, description, sterilized, isApproved, null);
         // Animal animal = svc.addAnimal(pk_type_animal, weight,age);
         svc.filterGender();
         svc.filterSterilized();
@@ -786,10 +789,10 @@ public class MyController extends WebMvcConfigurerAdapter {
         return "redirect:/sponsors/{pk_sponsor}";
     }
 
-    //get form client
+    //get animal form client
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/json")
-    public Object descIndex(String species, String name, String breed, String gender, String age, String description, String weight, String sterilize, String image) throws IOException {
+    public Object descIndex(String species, String name, String breed, String gender, String age, String description, String weight, String sterilize, String image, String phone) throws IOException {
         int animalGender = Integer.parseInt(gender);
         int animalAge = Integer.parseInt(age);
         float animalWeight = Float.parseFloat(weight);
@@ -798,9 +801,41 @@ public class MyController extends WebMvcConfigurerAdapter {
         Type_Animal animalType = svc.findAnimalPK(species);
 
         Long pk_type_animal = animalType.getPk_type_animal();
-        Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, animalWeight, breed, animalAge, description, animalSterilize, isNotApproved);
+        Animal animal = svc.addAnimal(pk_type_animal, name, typeHomeless, animalGender, animalWeight, breed, animalAge, description, animalSterilize, isNotApproved, phone);
         //Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
+        System.out.println("Phone:" + phone);
+        log.info(animal.getPk_animal());
+        //Volunteer volunteer = svc.addVolunteer(null, null, 123, null, null, description);
+        String myPath = "C:\\testIMG\\static\\img" + File.separator + "temp_animals\\";
 
+        File dir = new File(myPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        byte[] data = Base64.decodeBase64(image);
+        try (OutputStream stream = new FileOutputStream(myPath + animal.getPk_animal() + ".jpg")) {
+            log.info("created:" + stream.toString());
+            stream.write(data);
+        }
+        notification();
+
+        return null;
+
+    }
+
+    //get lost animal form client
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/lost_animal")
+    public Object receiveLostAnimal(String date, String location, String species, String description, String image, String phone) throws IOException {
+
+        Type_Animal animalType = svc.findAnimalPK(species);
+
+        Long pk_type_animal = animalType.getPk_type_animal();
+        Animal animal = svc.addAnimal(pk_type_animal, null, typeLost, 0, 0, null, 0, description, 0, isNotApproved, phone);
+        // Animal animal = svc.addLostAnimal(pk_type_animal, typeLost, description, phone);
+        //Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
+        System.out.println("Phone:" + phone);
         log.info(animal.getPk_animal());
         //Volunteer volunteer = svc.addVolunteer(null, null, 123, null, null, description);
         String myPath = "C:\\testIMG\\static\\img" + File.separator + "temp_animals\\";

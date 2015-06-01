@@ -52,6 +52,15 @@ public class Animal implements Serializable {
     private String sterilized_status;
     private String showAge;
     private String dateReceived;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getDateReceived() {
         return dateReceived;
@@ -102,6 +111,14 @@ public class Animal implements Serializable {
         // this.is_were_owner = is_were_owner;
     }
 
+    public Animal(Type_Animal type_animal, String type, String description) {
+        this.typeanimal = type_animal;
+
+        this.type = type;
+
+        this.description = description;
+    }
+
     public Long getId() {
         return pk_animal;
     }
@@ -144,6 +161,50 @@ public class Animal implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public void setPk_animal(Long pk_animal) {
+        this.pk_animal = pk_animal;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIs_were_owner(Boolean is_were_owner) {
+        this.is_were_owner = is_were_owner;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public void setSterilized(int sterilized) {
+        this.sterilized = sterilized;
+    }
+
+    public void setIsapproved(int isapproved) {
+        this.isapproved = isapproved;
     }
 
     public void updateAnimal(Type_Animal type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {

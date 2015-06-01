@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package AnimalShelter.Repositories;
- 
+
 import AnimalShelter.Core.Animal;
 import AnimalShelter.Core.Type_Animal;
 import java.util.Collection;
@@ -16,19 +16,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
-    Collection<Animal> findByGenderAndIsapproved(Integer gender,Integer isapproved);
+    Collection<Animal> findByGenderAndIsapproved(Integer gender, Integer isapproved);
 
-    Collection<Animal> findByAgeAndIsapproved(Integer age,Integer isapproved);
+    Collection<Animal> findByAgeAndIsapproved(Integer age, Integer isapproved);
 
-    Collection<Animal> findByTypeanimalAndIsapproved(Type_Animal typeanimal,Integer isapproved);
+    Collection<Animal> findByTypeanimalAndIsapproved(Type_Animal typeanimal, Integer isapproved);
 
-    Collection<Animal> findByGenderAndAgeAndIsapproved(Integer gender, Integer age,Integer isapproved);
+    Collection<Animal> findByGenderAndAgeAndIsapproved(Integer gender, Integer age, Integer isapproved);
 
-    Collection<Animal> findByTypeanimalAndGenderAndIsapproved(Type_Animal typeanimal, Integer gender,Integer isapproved);
+    Collection<Animal> findByTypeanimalAndGenderAndIsapproved(Type_Animal typeanimal, Integer gender, Integer isapproved);
 
-    Collection<Animal> findByTypeanimalAndAgeAndIsapproved(Type_Animal typeanimal, Integer age,Integer isapproved);
+    Collection<Animal> findByTypeanimalAndAgeAndIsapproved(Type_Animal typeanimal, Integer age, Integer isapproved);
 
-    Collection<Animal> findByTypeanimalAndGenderAndAgeAndIsapproved(Type_Animal typeanimal, Integer gender, Integer age,Integer isapproved);
-    
+    Collection<Animal> findByTypeanimalAndGenderAndAgeAndIsapproved(Type_Animal typeanimal, Integer gender, Integer age, Integer isapproved);
+
     Collection<Animal> findByIsapproved(Integer isapproved);
+
+    Collection<Animal> findByType(String isLost);
 }

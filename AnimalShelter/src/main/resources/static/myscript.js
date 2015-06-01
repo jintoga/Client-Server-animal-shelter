@@ -70,9 +70,12 @@ $(document).ready(function () {
             dataType: "json",
             data: {pk_animal: pk_animal}
         }).done(function (data) {
+            var showBreed;
+            var showName;
             var showAge;
             var showGender;
             var showSterilize;
+            var showDescription;
             if (data.age === 1) {
 
                 showAge = "< 1 Года";
@@ -112,12 +115,31 @@ $(document).ready(function () {
             }
             //alert(data.name);
 
+            if (data.name === null) {
+                showName = "";
+            }
+            else {
+                showName = data.name;
+            }
+            if (data.breed === null) {
+                showBreed = "";
+            }
+            else {
+                showBreed = data.breed;
+            }
+            if (data.description === null) {
+                showDescription = "";
+            }
+            else {
+                showDescription = data.description;
+            }
+
             $('#myModal2').modal('show');  // put your modal id 
 
             $('#modalContent2').modal('show').html('<img  style="max-height: 100%; max-width: 100%" src="/img/temp_animals/' + data.pk_animal + '.jpg' + '"/>');
             $('#modalContent3').modal('show').html('<h4>Вид: <span class="myIcon">' + data.type_animal + '</span></h4>');
-            $('#modalContent3').modal('show').append('<h4>Кличка: <span>' + data.name + '</span></h4>');
-            $('#modalContent3').modal('show').append('<h4>Порода: <span>' + data.breed + '</span></h4>');
+            $('#modalContent3').modal('show').append('<h4>Кличка: <span>' + showName + '</span></h4>');
+            $('#modalContent3').modal('show').append('<h4>Порода: <span>' + showBreed + '</span></h4>');
             $('#modalContent3').modal('show').append('<h4>Пол: <span>' + showGender + '</span></h4>');
             $('#modalContent3').modal('show').append('<h4>Возраст: <span>' + showAge + '</span></h4>');
             $('#modalContent3').modal('show').append('<h4>Вес: <span>' + data.weight + 'кг</span></h4>');
