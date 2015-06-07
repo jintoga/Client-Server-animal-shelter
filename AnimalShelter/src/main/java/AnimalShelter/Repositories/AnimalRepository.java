@@ -33,4 +33,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Collection<Animal> findByIsapproved(Integer isapproved);
 
     Collection<Animal> findByType(String isLost);
+
+    Collection<Animal> findByTypeAndIsapproved(String isLost, Integer isapproved);
 }

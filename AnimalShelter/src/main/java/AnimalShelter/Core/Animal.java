@@ -54,6 +54,44 @@ public class Animal implements Serializable {
     private String dateReceived;
     private String phoneNumber;
 
+    private String last_date_seen;
+    private String last_location;
+
+    private String latitude;
+    private String longitude;
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLast_date_seen() {
+        return last_date_seen;
+    }
+
+    public void setLast_date_seen(String last_date_seen) {
+        this.last_date_seen = last_date_seen;
+    }
+
+    public String getLast_location() {
+        return last_location;
+    }
+
+    public void setLast_location(String last_location) {
+        this.last_location = last_location;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

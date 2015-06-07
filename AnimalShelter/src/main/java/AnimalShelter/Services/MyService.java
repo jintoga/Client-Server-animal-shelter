@@ -79,7 +79,7 @@ public interface MyService {
 
     public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved, String phoneNumber);
 
-    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber);
+    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber, String last_date_seen, String last_location, String latitude, String longitude);
 
     public Type_Animal findAnimalPK(String type_animal);
 

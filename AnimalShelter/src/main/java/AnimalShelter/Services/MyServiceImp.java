@@ -140,10 +140,14 @@ public class MyServiceImp implements MyService {
     }
 
     @Override
-    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber) {
+    public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber, String last_date_seen, String last_location, String latitude, String longitude) {
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
         Animal animal = new Animal(type_animal, type, description);
 
+        animal.setLast_date_seen(last_date_seen);
+        animal.setLast_location(last_location);
+        animal.setLatitude(latitude);
+        animal.setLongitude(longitude);
         if (phoneNumber != null) {
             animal.setPhoneNumber(phoneNumber);
         }
@@ -502,7 +506,7 @@ public class MyServiceImp implements MyService {
 
     @Override
     public Collection<Animal> animalsIsLost(String isLost) {
-        return animals.findByType(isLost);
+        return animals.findByTypeAndIsapproved(isLost, isApprovedByAdmin);
     }
 
 }

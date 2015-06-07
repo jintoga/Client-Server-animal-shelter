@@ -72,7 +72,13 @@ public class MyController extends WebMvcConfigurerAdapter {
     private final String tag_gender = "gender";
     private final String tag_sterilize = "sterilize";
     private final String tag_description = "description";
+    private final String tag_latitude = "latitude";
+    private final String tag_longitude = "longitude";
+
     private final String tag_image = "image";
+
+    private final String tag_date = "date";
+    private final String tag_location = "location";
 
     private final String typeLost = "Потерянное";
     private final String typeHomeless = "Бездомное";
@@ -100,7 +106,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         return stringOfDecodedImage;
     }
 
-    //client load json from server
+    //client load animals from server
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/loading")
     public Object clientLoadingFromServer(String data) {
@@ -123,6 +129,40 @@ public class MyController extends WebMvcConfigurerAdapter {
                 jSONObject.put(tag_weight, animalToShow.getWeight());
                 jSONObject.put(tag_sterilize, animalToShow.getSterilized_status());
                 jSONObject.put(tag_description, animalToShow.getDescription());
+//                try {
+//                    jSONObject.put(tag_image, getFile(animalToShow.getPk_animal()));
+//                    log.info(getFile(animalToShow.getPk_animal()));
+//                } catch (IOException ex) {
+//                    Logger.getLogger(MyController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                jsonArray.add(jSONObject);
+            }
+        }
+
+        return jsonArray;
+    }
+
+    //client load lost animals from server
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/loading_lost_animals")
+    public Object clientLoadingLostAnimalsFromServer(String data) {
+        svc.filterAge();
+        svc.filterGender();
+        svc.filterSterilized();
+        JSONArray jsonArray = null;
+
+        JSONObject jSONObject;
+        if (svc.animalsIsApprovedByAdmin().size() > 0) {
+            jsonArray = new JSONArray();
+            for (Animal animalToShow : svc.animalsIsLost(typeLost)) {
+                jSONObject = new JSONObject();
+                jSONObject.put(tag_pk, animalToShow.getPk_animal());
+                jSONObject.put(tag_species, animalToShow.getType_animal().getTitle());
+                jSONObject.put(tag_date, animalToShow.getLast_date_seen());
+                jSONObject.put(tag_location, animalToShow.getLast_location());
+                jSONObject.put(tag_description, animalToShow.getDescription());
+                jSONObject.put(tag_latitude, animalToShow.getLatitude());
+                jSONObject.put(tag_longitude, animalToShow.getLongitude());
 //                try {
 //                    jSONObject.put(tag_image, getFile(animalToShow.getPk_animal()));
 //                    log.info(getFile(animalToShow.getPk_animal()));
@@ -827,13 +867,13 @@ public class MyController extends WebMvcConfigurerAdapter {
     //get lost animal form client
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/lost_animal")
-    public Object receiveLostAnimal(String date, String location, String species, String description, String image, String phone) throws IOException {
+    public Object receiveLostAnimal(String date, String location, String species, String description, String image, String phone, String latitude, String longitude) throws IOException {
 
         Type_Animal animalType = svc.findAnimalPK(species);
 
         Long pk_type_animal = animalType.getPk_type_animal();
-        Animal animal = svc.addAnimal(pk_type_animal, null, typeLost, 0, 0, null, 0, description, 0, isNotApproved, phone);
-        // Animal animal = svc.addLostAnimal(pk_type_animal, typeLost, description, phone);
+        //Animal animal = svc.addAnimal(pk_type_animal, null, typeLost, 0, 0, null, 0, description, 0, isNotApproved, phone);
+        Animal animal = svc.addLostAnimal(pk_type_animal, typeLost, description, phone, date, location, latitude, longitude);
         //Animal animal = svc.addAnimal(pk_type_animal, name, null, animalGender, null, null, 2.5f, null, null, 25, null, 1, isNotApproved);
         System.out.println("Phone:" + phone);
         log.info(animal.getPk_animal());
