@@ -40,9 +40,13 @@ public class GoogleMapActivity extends Activity {
 
     ArrayAdapter<String> adapterMap;
 
-    EditText editTextAddress;
+    EditText editTextAddress, editTextLatLng;
 
     Button accept, cancel;
+
+    private String latitudeToSend;
+    private String longitudeToSend;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,7 @@ public class GoogleMapActivity extends Activity {
         accept = (Button) findViewById(R.id.buttonAcceptAddress);
         cancel = (Button) findViewById(R.id.buttonCancelMap);
         editTextAddress = (EditText) findViewById(R.id.editTextAddressInMap);
+        editTextLatLng = (EditText) findViewById(R.id.editTextLatLng);
         spinner_maps_type = (Spinner) findViewById(R.id.spinner_map_type);
         Resources res = GoogleMapActivity.this.getResources();
 
@@ -178,6 +183,8 @@ public class GoogleMapActivity extends Activity {
                     Intent intent = new Intent(GoogleMapActivity.this, SendLostAnimal.class);
                     Bundle bundle = new Bundle();
                     bundle.putString(SendLostAnimal.KEY_ADDRESS, addressResult);
+                    bundle.putString(SendLostAnimal.KEY_LAT, latitudeToSend);
+                    bundle.putString(SendLostAnimal.KEY_LNG, longitudeToSend);
                     intent.putExtras(bundle);
                     setResult(SendLostAnimal.RESULT_LOCATION, intent);
                     finish();
@@ -199,6 +206,9 @@ public class GoogleMapActivity extends Activity {
                     String fullAddress = addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getAddressLine(1) + ", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName();
                     //Toast.makeText(GoogleMapActivity.this, "Address: " + fullAddress, Toast.LENGTH_SHORT).show();
                     editTextAddress.setText(fullAddress);
+                    editTextLatLng.setText(lat + "-" + lng);
+                    latitudeToSend = lat + "";
+                    longitudeToSend = lng + "";
                 }
             }
         } catch (Exception e) {

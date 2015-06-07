@@ -16,13 +16,14 @@ import android.widget.Spinner;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.dat.animalsshelter.BaseActivity;
 import com.dat.animalsshelter.R;
 import com.dat.animalsshelter.internet_stuff.ServerRequest;
 import com.dat.animalsshelter.model.Animal;
 
 import java.util.ArrayList;
 
-public class GetListAnimals extends Activity {
+public class GetListAnimals extends BaseActivity {
     GridView gridview;
     public CustomAdapterGridview customAdapterGridview = null;
     private ArrayList<Animal> listAnimal = new ArrayList<>();
@@ -37,7 +38,12 @@ public class GetListAnimals extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_list_animals);
+        //setContentView(R.layout.activity_get_list_animals);
+        getLayoutInflater().inflate(R.layout.activity_get_list_animals, frameLayout);
+
+        listItemDrawer.setItemChecked(position, true);
+
+        setTitle(listItemDrawer.getItemAtPosition(position) + "");
         getID();
         setEvents();
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
@@ -47,7 +53,7 @@ public class GetListAnimals extends Activity {
     }
 
 
-    public void getID() {
+    private void getID() {
         gridview = (GridView) findViewById(R.id.gridView);
         editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -81,7 +87,7 @@ public class GetListAnimals extends Activity {
     }
 
 
-    public void setEvents() {
+    private void setEvents() {
         customAdapterGridview = new CustomAdapterGridview(GetListAnimals.this, R.layout.custom_item_gridview, listAnimal);
         gridview.setAdapter(customAdapterGridview);
 

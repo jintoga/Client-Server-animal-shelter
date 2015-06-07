@@ -9,9 +9,37 @@ public class Animal implements Serializable {
     private static final long serialVersionUID = 1L;
 
     String imageString;
-    String pk, species, name, breed, gender, age, weight, sterilize, description;
+    String pk, species, name, breed, gender, age, weight, sterilize, description, last_date_seen, last_location, latitude, longitude;
 
     String imageURLthumbnail, imageURL;
+
+    public Animal(String pk, String species, String date, String location, String description, String latitude, String longitude) {
+        this.pk = pk;
+        this.species = species;
+        this.last_date_seen = date;
+        this.last_location = location;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.imageURLthumbnail = "http://10.0.3.2:4445/img/animals/thumbnails/" + pk + ".jpg";
+        this.imageURL = "http://10.0.3.2:4445/img/animals/" + pk + ".jpg";
+    }
+
+    public String getLast_date_seen() {
+        return last_date_seen;
+    }
+
+    public void setLast_date_seen(String last_date_seen) {
+        this.last_date_seen = last_date_seen;
+    }
+
+    public String getLast_location() {
+        return last_location;
+    }
+
+    public void setLast_location(String last_location) {
+        this.last_location = last_location;
+    }
 
     public String getImageURL() {
         return imageURL;
@@ -27,6 +55,22 @@ public class Animal implements Serializable {
 
     public void setImageURLthumbnail(String imageURLthumbnail) {
         this.imageURLthumbnail = imageURLthumbnail;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public Animal(String pk, String species, String name, String breed, String gender, String age, String weight, String sterilize, String description) {
@@ -47,6 +91,7 @@ public class Animal implements Serializable {
 
     public Animal() {
     }
+
 
     public String getPk() {
         return pk;

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.dat.animalsshelter.BaseActivity;
 import com.dat.animalsshelter.R;
 import com.dat.animalsshelter.camera_stuff.AlbumStorageDirFactory;
 import com.dat.animalsshelter.camera_stuff.BaseAlbumDirFactory;
@@ -41,7 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SendLostAnimal extends Activity {
+public class SendLostAnimal extends BaseActivity {
 
     Spinner spinnerSpecies2;
     EditText editTextDescription2, editTextPhone2, editTextDate, editTextAddress;
@@ -66,6 +68,8 @@ public class SendLostAnimal extends Activity {
     private static final String TAG_PHONE = "phone";
     private static final String TAG_DATE = "date";
     private static final String TAG_LOCATION = "location";
+    private static final String TAG_LATITUDE = "latitude";
+    private static final String TAG_LONGITUDE = "longitude";
 
     private String animalSpecies, animalDescription, phoneNumber, location, date;
 
@@ -74,11 +78,22 @@ public class SendLostAnimal extends Activity {
     public static final int RESULT_LOCATION = 119;
     public static final int REQUEST_ADDRESS_FROM_MAP = 120;
     public static final String KEY_ADDRESS = "result";
+    public static final String KEY_LAT = "latitude";
+    public static final String KEY_LNG = "longitude";
+
+    private String latitudeToSend;
+    private String longitudeToSend;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_lost_animal);
+        //setContentView(R.layout.activity_send_lost_animal);
+        getLayoutInflater().inflate(R.layout.activity_send_lost_animal, frameLayout);
+
+        listItemDrawer.setItemChecked(position, true);
+
+        setTitle(listItemDrawer.getItemAtPosition(position) + "");
         addControls();
         addEvents();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
@@ -204,6 +219,8 @@ public class SendLostAnimal extends Activity {
         informationAnimal.put(TAG_SPECIES, animalSpecies + "");
         informationAnimal.put(TAG_DESCRIPTION, animalDescription);
         informationAnimal.put(TAG_PHONE, phoneNumber + "");
+        informationAnimal.put(TAG_LATITUDE, latitudeToSend + "");
+        informationAnimal.put(TAG_LONGITUDE, longitudeToSend + "");
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -249,7 +266,9 @@ public class SendLostAnimal extends Activity {
             case REQUEST_ADDRESS_FROM_MAP:
                 if (resultCode == RESULT_LOCATION) {
                     String address = data.getStringExtra(KEY_ADDRESS);
-                    editTextAddress.setText(address);
+                    latitudeToSend = data.getStringExtra(KEY_LAT);
+                    longitudeToSend = data.getStringExtra(KEY_LNG);
+                    editTextAddress.setText(address/* + "(" + latitudeToSend + "-" + longitudeToSend + ")"*/);
 
                 }
                 break;

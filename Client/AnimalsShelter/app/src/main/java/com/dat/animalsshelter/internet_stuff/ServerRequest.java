@@ -12,6 +12,7 @@ import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.dat.animalsshelter.R;
 import com.dat.animalsshelter.get_list_animals.GetListAnimals;
+import com.dat.animalsshelter.get_list_lost_animals.GetListLostAnimals;
 import com.dat.animalsshelter.model.Animal;
 import com.dat.animalsshelter.send_animal.SendAnimal;
 import com.dat.animalsshelter.send_lost_animal.SendLostAnimal;
@@ -37,13 +38,22 @@ public class ServerRequest {
     private final String TAG_WEIGHT = "weight";
     private final String TAG_STERILIZE = "sterilize";
     private final String TAG_DESCRIPTION = "description";
+    private final String TAG_DATE = "date";
+    private final String TAG_LOCATION = "location";
+    private final String TAG_LATITUDE = "latitude";
+    private final String TAG_LONGITUDE = "longitude";
 
     private GetListAnimals getListAnimals = null;
+    private GetListLostAnimals getListLostAnimals = null;
     private ArrayList<Bitmap> listBitmap = new ArrayList<>();
 
 
     public ServerRequest(GetListAnimals getListAnimals) {
         this.getListAnimals = getListAnimals;
+    }
+
+    public ServerRequest(GetListLostAnimals getListLostAnimals) {
+        this.getListLostAnimals = getListLostAnimals;
     }
 
     public ServerRequest() {
@@ -221,6 +231,74 @@ public class ServerRequest {
                         }
 
                         getListAnimals.customAdapterGridview.notifyDataSetChanged();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                progressDialog.hide();
+                progressDialog.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof ServerError) {
+                    progressDialog.hide();
+                    progressDialog.dismiss();
+                    ServerError serverError = (ServerError) error;
+                    Toast.makeText(context, "Server Err:" + serverError.toString(), Toast.LENGTH_LONG).show();
+                } else {
+                    progressDialog.hide();
+                    progressDialog.dismiss();
+                    Toast.makeText(context, "Other Err:" + error.toString(), Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        AppController.getInstance(context).addToRequestQueue(jsObjRequest);
+        return listBitmap;
+    }
+
+    public ArrayList<Bitmap> downloadingLostAnimalsFromServer(final Context context) {
+
+        final String myUrl = "http://10.0.3.2:4445/loading_lost_animals";
+        this.context = context;
+
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Loading from SERVER...Please Wait!");
+        progressDialog.show();
+
+        CustomRequest jsObjRequest = new CustomRequest(Request.Method.GET, myUrl, null, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String jsonString) {
+
+                if (jsonString != null) {
+                    try {
+
+                        // Getting JSON Array node
+                        JSONArray jsonArray = new JSONArray(jsonString);
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            String pk = jsonObject.getString(TAG_PK);
+                            String species = jsonObject.getString(TAG_SPECIES);
+                            String date = jsonObject.getString(TAG_DATE);
+                            String location = jsonObject.getString(TAG_LOCATION);
+                            String description = jsonObject.getString(TAG_DESCRIPTION);
+                            String latitude = jsonObject.getString(TAG_LATITUDE);
+                            String longitude = jsonObject.getString(TAG_LONGITUDE);
+
+
+                            // Animal animal = new Animal(pk, species, name, breed, gender, age, weight, sterilize, description);
+                            Animal animal = new Animal(pk, species, date, location, description, latitude, longitude);
+                            getListLostAnimals.getListAnimal().add(animal);
+
+                        }
+
+                        getListLostAnimals.customAdapterGridview2.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

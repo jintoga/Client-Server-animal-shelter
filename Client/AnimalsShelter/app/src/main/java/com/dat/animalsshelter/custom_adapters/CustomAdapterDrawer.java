@@ -1,23 +1,33 @@
 package com.dat.animalsshelter.custom_adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dat.animalsshelter.BaseActivity;
 import com.dat.animalsshelter.R;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by DAT on 5/31/2015.
  */
 public class CustomAdapterDrawer extends BaseAdapter {
+    //private int selectedPosition;
+    private SparseBooleanArray enabledItems = new SparseBooleanArray();
+
     Context context;
     String[] listDrawer;
     int[] images = {R.drawable.shelter
+            , R.drawable.shelter
             , R.drawable.sendpet
             , R.drawable.lostfound
             , R.drawable.lostdog
@@ -45,8 +55,19 @@ public class CustomAdapterDrawer extends BaseAdapter {
     }
 
     @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return true;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = null;
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.custom_row_drawer, parent, false);
@@ -59,6 +80,15 @@ public class CustomAdapterDrawer extends BaseAdapter {
         textView.setText(listDrawer[position]);
         imageView.setImageResource(images[position]);
 
+        if (((BaseActivity) context).getPosition() == position) {
+            row.setBackgroundColor(context.getResources().getColor(android.R.color.secondary_text_light_nodisable));
+            //row.setEnabled(false);
+        } else {
+            row.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+            //row.setEnabled(true);
+            //areAllItemsEnabled();
+        }
+        // Toast.makeText(context, position + "", Toast.LENGTH_SHORT).show();
         return row;
     }
 }

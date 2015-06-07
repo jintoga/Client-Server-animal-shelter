@@ -52,6 +52,23 @@
 
         </TableRow>
 
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lat-Long:"
+                android:id="@+id/textView26" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:id="@+id/editTextLatLng" />
+        </TableRow>
+
     </TableLayout>
 
     <RelativeLayout

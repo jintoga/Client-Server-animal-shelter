@@ -7,6 +7,7 @@
 
     <string name="album_name">New Album</string>
     <string-array name="drawer_items">
+        <item>NEWS</item>
         <item>Список Животных Приюта</item>
         <item>Отдать Животное В Приют</item>
         <item>Список Потерянных Животных</item>
@@ -99,4 +100,7 @@
         <item>НОРМАЛЬНЫЙ</item>
         <item>ГИБРИД</item>
     </string-array>
+    <string name="title_activity_get_list_lost_animals">GetListLostAnimals</string>
+    <string name="title_activity_show_one_lost_animal">ShowOneLostAnimal</string>
+    <string name="title_activity_google_map_lost_animals">GoogleMapLostAnimals</string>
 </resources>

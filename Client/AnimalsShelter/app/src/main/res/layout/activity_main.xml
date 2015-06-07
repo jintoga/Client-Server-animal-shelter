@@ -19,7 +19,7 @@
     <ListView
         android:id="@+id/drawerList"
         android:layout_width="240dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:background="#ffaccdff" />
+        android:background="@drawable/backgroundrepeat" />
 </android.support.v4.widget.DrawerLayout>

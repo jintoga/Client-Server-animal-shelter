@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.dat.animalsshelter.BaseActivity;
 import com.dat.animalsshelter.R;
 import com.dat.animalsshelter.camera_stuff.AlbumStorageDirFactory;
 import com.dat.animalsshelter.camera_stuff.BaseAlbumDirFactory;
@@ -40,7 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SendAnimal extends Activity {
+public class SendAnimal extends BaseActivity {
 
     Spinner spinnerSpecies, spinnerAge;
     EditText editTextName, editTextBreed, editTextWeight, editTextDescription, editTextPhone;
@@ -86,7 +88,13 @@ public class SendAnimal extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_animal);
+        //setContentView(R.layout.activity_send_animal);
+        getLayoutInflater().inflate(R.layout.activity_send_animal, frameLayout);
+
+        listItemDrawer.setItemChecked(position, true);
+
+        setTitle(listItemDrawer.getItemAtPosition(position) + "");
+
         addControls();
         addEvents();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
