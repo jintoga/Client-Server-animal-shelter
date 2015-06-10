@@ -28,7 +28,7 @@ public class Sponsor implements Serializable {
 
     @Column(nullable = false, unique = false)
     private String name;
-    private int telephone;
+    private String telephone;
     private String address;
     private String site;
     private String email;
@@ -49,7 +49,7 @@ public class Sponsor implements Serializable {
     public Sponsor() {
     }
 
-    public Sponsor(String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public Sponsor(String name, String telephone, String address, String site, String email, String description, int is_organization) {
         this.name = name;
         this.telephone = telephone;
         this.address = address;
@@ -60,7 +60,7 @@ public class Sponsor implements Serializable {
         this.is_organization = is_organization;
     }
 
-    public void updateSponsor(String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public void updateSponsor(String name, String telephone, String address, String site, String email, String description, int is_organization) {
         this.name = name;
         this.telephone = telephone;
         this.address = address;
@@ -87,11 +87,11 @@ public class Sponsor implements Serializable {
         this.name = name;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

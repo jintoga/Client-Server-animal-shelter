@@ -3,12 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
 
     <th:block layout:fragment="rows">
-        <form method="POST" th:action="'/sponsors/add'" enctype="multipart/form-data" >
+        <form id="addSponsorForm" method="POST" th:action="'/sponsors/add'" enctype="multipart/form-data" >
 
             <table class="table">
 
                 <div class="caption">
-                    <input  name="name" placeholder="Название/ФИО"  />
+                    <input name="name" placeholder="Название/ФИО"  id="id_sponsor_name" />
                 </div>					
                 <div class="caption">
                     <h5>Организация:
@@ -19,10 +19,10 @@
                     </h5>
                 </div>
                 <div class="caption">
-                    <input  name="telephone" placeholder="Номер телефона"  />
+                    <input  type="tel" pattern="[0-9]*" title="Номер телефон"  name="telephone" placeholder="Номер телефона" id="id_sponsor_phone"  />
                 </div>	
                 <div class="caption">
-                    <input  name="address" placeholder="Адрес"  />
+                    <input  name="address" placeholder="Адрес"  id="id_sponsor_address"/>
                 </div>	
 
                 <div class="caption">
@@ -67,7 +67,7 @@
                             <center><h6>Адрес: <span th:text="${sponsor.address}"></span></h6></center>
                             <center><h6>Сайт: <span th:text="${sponsor.site}"></span></h6></center>
                             <center><h6>Почта: <span th:text="${sponsor.email}"></span></h6></center>
-                            <center><h6>description: <span th:text="${sponsor.description}"></span></h6></center>
+                            <center><h6>Описание: <span th:text="${sponsor.description}"></span></h6></center>
 
                         </div>
                     </div>
@@ -76,9 +76,11 @@
 
             </tr>
         </tbody>
-        <script>
-            document.title = "Спонсоры";
-        </script>
+
     </th:block>
 
 </html>
+<script>
+    document.title = "Спонсоры";
+</script>
+<script src="/sponsor_checkempty.js"></script>

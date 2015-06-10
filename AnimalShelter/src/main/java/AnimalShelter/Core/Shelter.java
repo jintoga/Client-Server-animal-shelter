@@ -28,7 +28,7 @@ public class Shelter implements Serializable {
 
     @Column(nullable = false, unique = false)
     private String name;
-    private int telephone;
+    private String telephone;
     private String address;
     private int seat;
     private int free_seat;
@@ -39,7 +39,7 @@ public class Shelter implements Serializable {
     public Shelter() {
     }
 
-    public Shelter(String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public Shelter(String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
         this.name = name;
         this.telephone = telephone;
         this.address = address;
@@ -67,13 +67,15 @@ public class Shelter implements Serializable {
         this.name = name;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
+    
 
     public String getAddress() {
         return address;
@@ -123,7 +125,7 @@ public class Shelter implements Serializable {
         this.description = description;
     }
 
-    public void updateShelter(String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public void updateShelter(String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
         this.name = name;
         this.telephone = telephone;
         this.address = address;

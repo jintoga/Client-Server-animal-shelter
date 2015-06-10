@@ -28,14 +28,14 @@ public class Owner implements Serializable {
 
     @Column(nullable = false, unique = false)
     private String name;
-    private int telephone;
+    private String telephone;
     private String address;
     private int amount_of_animal;
 
     public Owner() {
     }
 
-    public Owner(String name, int telephone, String address, int amount_of_animal) {
+    public Owner(String name, String telephone, String address, int amount_of_animal) {
 
         this.name = name;
         this.telephone = telephone;
@@ -60,11 +60,11 @@ public class Owner implements Serializable {
         this.pk_owner = pk_owner;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -84,7 +84,7 @@ public class Owner implements Serializable {
         this.amount_of_animal = amount_of_animal;
     }
 
-    public void updateOwner(String name, int telephone, String address, int amount_of_animal) {
+    public void updateOwner(String name, String telephone, String address, int amount_of_animal) {
         this.name = name;
         this.telephone = telephone;
         this.address = address;

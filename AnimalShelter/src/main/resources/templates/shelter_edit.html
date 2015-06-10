@@ -15,7 +15,7 @@
 
                     <div class="caption">
                         <span class="col-sm-2" >Номер телефона:</span>
-                        <input  name="telephone" th:value="${shelter.telephone}" />
+                        <input  type="tel" pattern="[0-9]*" title="Номер телефон"  name="telephone" th:value="${shelter.telephone}" />
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Адрес: </span>
@@ -23,11 +23,11 @@
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Количество мест:</span>
-                        <input  name="seat" th:value="${shelter.seat}"  />
+                        <input  type="number" name="seat" th:value="${shelter.seat}"  />
                     </div>
                     <div class="caption">
                         <span class="col-sm-2" >Свободных мест:</span>
-                        <input  name="free_seat" th:value="${shelter.free_seat}"  />
+                        <input  type="number" name="free_seat" th:value="${shelter.free_seat}"  />
                     </div>
                     <div class="caption">
                         <span class="col-sm-2" >Сайт:</span>

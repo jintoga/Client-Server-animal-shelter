@@ -4,84 +4,219 @@
 
     <body>
         <th:block layout:fragment="rows">
-            <form method="POST" th:action="'/profits/add'" enctype="multipart/form-data">
-
-                <table class="table">
-                    <div class="caption">
-                        <input  name="amount" placeholder="Количество"  />
-                    </div>
-                    <div class="caption"> 
-
-                        <div class="input-append date dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
-                            <span class="add-on"> 
-                                <input   size="15" name="date_receive" placeholder="Дата получения" readonly="readonly" />
-                                <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
-                            </span>
-                        </div>
-
-                    </div>
-                    <div class="caption"> 
-                        <h5>Спонсор:
-                            <select  name="pk_sponsor" id="id_sponsor">
-                                <c:forEach th:each="item: ${sponsors}">
-                                    <option th:value="${item.pk_sponsor}"  th:text="${item.name} + '('+${item.pk_sponsor}+')' "></option>
-                                </c:forEach>
-                            </select> 
-                        </h5>
-                    </div>
-                    <div class="caption"> 
-                        <h5>Тип поддержки:
-                            <select  name="pk_support_type" id="id_support_type">
-                                <c:forEach th:each="item: ${support_types}">
-                                    <option  th:value="${item.pk_support_type}" th:text="${item.title} + '('+${item.pk_support_type}+')' "></option>
-                                </c:forEach>
-                            </select> 
-                        </h5>
-                    </div>
-                     
-                    <div class="span6">
-                        <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
-                    </div>
-                </table>
-                <button type="submit" class="btn btn-primary" id="add_button">Добавить</button> 
-                <button type="reset" class="btn btn-default">Очистить поля</button> 
-            </form>
 
 
-            <br/><br/>
+            <br/><br/> 
+            <div class="col-lg-3" >
+                <div id="makeBorder" style="padding: 25px;border: #9d9d9d groove 1px; border-radius: 15px">
 
-            <br/> 
+                    <form id="addProfitForm" method="POST" th:action="'/profits/add'" enctype="multipart/form-data">
 
-
-            <br/><br/><br/>
-
-            <tbody>
-
-                <tr th:each="profit: ${profits}">
-
-                    <div class="col-sm-6 col-md-4">
-
-                        <form  method="GET" th:action="@{'/profits/' + ${profit.pk_profit}}">
-                            <button class="btn-info btn-sm">Подробнее</button> 
-                        </form>
-
-                        <div class="thumbnail">
-                              
+                        <table class="table">
                             <div class="caption">
-                                <center><h4>Количество: <strong><span th:text="${profit.amount}"></span></strong></h4></center>
-                                <center><h4>Дата получения: <strong><span th:text="${profit.date_receive}"></span></strong></h4></center>
-                                <center><h3>Спонсор: <span th:text="${profit.sponsor.name}"></span></h3></center>
-                                <center><h3>Тип поддержки: <span th:text="${profit.supporttype.title}"></span></h3></center>
-                                <center><h6>description: <span th:text="${profit.description}"></span></h6></center>
- 
+                                <input type="number" min="0" name="amount" placeholder="Количество" id="id_profit_amount" />
                             </div>
-                        </div>
-                    </div>
+                            <div class="caption"> 
 
-                </tr>
-            </tbody>
+                                <div class="input-append date dp3"   data-date="16-06-2015" data-date-format="dd-mm-yyyy">
+                                    <span class="add-on"> 
+                                        <input  id="id_profit_date" size="15" name="date_receive" placeholder="Дата получения" readonly="readonly" />
+                                        <a class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></a>
+                                    </span>
+
+                                </div>
+                                <input type="hidden" id="yearReceive" size="15" name="yearreceive" placeholder="Год получения" readonly="readonly" />
+                                <input type="hidden" id="monthReceive" size="15" name="monthreceive" placeholder="Год получения" readonly="readonly" />
+
+                            </div>
+                            <div class="caption"> 
+                                <h5>Спонсор:
+                                    <select  name="pk_sponsor" id="id_sponsor">
+                                        <c:forEach th:each="item: ${sponsors}">
+                                            <option th:value="${item.pk_sponsor}"  th:text="${item.name} + '('+${item.pk_sponsor}+')' "></option>
+                                        </c:forEach>
+                                    </select> 
+                                </h5>
+                            </div>
+                            <div class="caption"> 
+                                <h5>Тип поддержки:
+                                    <select  name="pk_support_type" id="id_support_type">
+                                        <c:forEach th:each="item: ${support_types}">
+                                            <option  th:value="${item.pk_support_type}" th:text="${item.title} + '('+${item.pk_support_type}+')' "></option>
+                                        </c:forEach>
+                                    </select> 
+                                </h5>
+                            </div>
+
+                            <div class="span6">
+                                <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
+                            </div>
+                        </table>
+                        <button style="width: 76px;" type="submit" class="btn btn-primary" id="add_button">Добавить</button> 
+                        <button style="width: 116px;"  type="reset" class="btn btn-default">Очистить поля</button> 
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-offset-3">
+                <tbody>
+                    <span class="col-sm-3 select" >
+                        <h5>Год:
+                            <select id="myfilter1" name="yearreceive" >
+                                <option  >Все</option>
+                                <c:forEach th:each="item: ${profits}">
+                                    <option  th:value="${item.yearreceive}" th:text="${item.yearreceive}"></option>
+                                </c:forEach>
+                            </select> 
+                        </h5>
+                    </span>
+                    <span class="col-sm-3 select" >
+                        <h5>Месяц:
+
+
+                            <select  id="myfilter2" name="monthreceive" >
+
+                                <option  >Все</option>
+                                <option value="1" >Январь</option>
+                                <option  value="2">Февраль</option>
+                                <option  value="3">Март</option>
+                                <option  value="4">Апрель</option>
+                                <option  value="5">Май</option>
+                                <option value="6" >Июнь</option>
+                                <option value="7" >Июль</option>
+                                <option  value="8">Август</option>
+                                <option  value="9">Сентябрь</option>
+                                <option  value="10">Октябрь</option>
+                                <option  value="11">Ноябрь</option>
+                                <option value="12" >Декабрь</option>
+
+                            </select> 
+
+                        </h5>
+                    </span>
+                    <br/><br/>
+                    <br/>
+                    <table class="table" id="message2">
+                        <tr  >
+
+                            <th>Дата получения</th>
+                            <th>Спонсор</th>
+
+                            <th>Количество</th>
+                            <th></th>
+                        </tr> 
+
+                        <tr  th:each="profit: ${profits}">
+
+                            <tr class="getRidOfIt2">
+
+                                <td><h4><span th:text="${profit.date_receive}"></span></h4></td>
+                                <td><h4><span th:text="${profit.sponsor.name}"></span></h4></td>
+
+                                <td><h4><span class="mycounter" th:text="${profit.amount}"></span></h4></td>
+                                <td>
+
+                                    <form  method="GET" th:action="@{'/profits/' + ${profit.pk_profit}}">
+                                        <button class="btn btn-info btn-xs">Подробнее</button> 
+                                    </form>
+                                </td>
+                            </tr>
+                        </tr>
+
+
+                    </table> 
+                    <div class="col-lg-offset-4 "><span style="background-color: #5cb85c;"><strong>Сумма:</strong></span>  
+                        <i><strong><span   style="margin-left: 110px; " id="sum"></span></strong> </i>
+
+                    </div>
+                </tbody>
+            </div>
         </th:block>
 
 
     </body>
+
 </html>
+<script>
+    document.title = "Доходы";
+    var usedNames = {};
+    var list = [];
+    var counter = 0;
+    $("select[name='yearreceive'] > option").each(function () {
+        if (usedNames[this.text]) {
+            $(this).remove();
+        } else {
+            usedNames[this.text] = this.value;
+            list.push(this.value);
+        }
+
+    });
+
+    var usedNames2 = {};
+    $("select[name='monthreceive'] > option").each(function () {
+        if (usedNames2[this.text]) {
+            $(this).remove();
+        } else {
+            usedNames2[this.text] = this.value;
+        }
+    });
+
+    $('#myfilter1').change(f2);
+
+    $('#myfilter2').change(f2);
+
+    function f2() {
+        counter = 0;
+        $('.getRidOfIt2').hide();
+        v1 = $("#myfilter1").val();
+        v2 = $("#myfilter2").val();
+
+        $.ajax({
+            type: "GET",
+            url: "/filter_profit",
+            dataType: "json",
+            data: {v1: v1, v2: v2}
+
+        }).done(function (data) {
+
+            $('.getRid2').hide();
+            $('.mycounter').remove();
+            for (var item in data) {
+                $("#message2").append('<tr class="getRid2">'
+                        + '<td> <h4><span>' + data[item].date_receive + '</span></h4></td>'
+                        + '<td> <h4><span>' + data[item].sponsor + '</span></h4></td>'
+                        + '<td> <h4><span class="mycounter">' + data[item].amount + '</span></h4></td>'
+                        + '<td><form class="getRidOfIt" method="GET" action="/profits/'
+                        + data[item].pk_profit + '"><button class="btn btn-info btn-xs">Подробнее</button></form></td></tr>');
+
+
+            }
+
+            var sum = 0;
+            $(".mycounter").each(function () {
+
+                sum = sum + parseInt($(this).text(), 10);
+
+                //counter += count;
+
+            });
+//            alert(sum);
+            $("#sum").html(sum);
+            sum = 0;
+        });
+//        $(".mycounter").blur(function () {
+//
+//        });
+
+
+    }
+
+    var sum = 0;
+    $('.mycounter').each(function () {
+        sum += parseInt($(this).text());
+    });
+    $("#sum").html(sum);
+    // here, you have your sum
+
+</script>
+<script src="/profit_checkempty.js"></script>

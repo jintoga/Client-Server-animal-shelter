@@ -31,7 +31,7 @@ public class Staff implements Serializable {
     @Column(nullable = false, unique = false)
     private String name;
     private String career;
-    private Integer telephone;
+    private String telephone;
     private String date_of_birth;
     private String address;
     private String description;
@@ -39,7 +39,7 @@ public class Staff implements Serializable {
     public Staff() {
     }
 
-    public Staff(String name, String career, int telephone, String date_of_birth, String address, String description) {
+    public Staff(String name, String career, String telephone, String date_of_birth, String address, String description) {
         this.name = name;
         this.career = career;
         this.telephone = telephone;
@@ -50,7 +50,7 @@ public class Staff implements Serializable {
 
     }
 
-    public void updateStaff(String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public void updateStaff(String name, String career, String telephone, String date_of_birth, String address, String description) {
         this.name = name;
         this.career = career;
         this.telephone = telephone;
@@ -85,11 +85,11 @@ public class Staff implements Serializable {
         this.career = career;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

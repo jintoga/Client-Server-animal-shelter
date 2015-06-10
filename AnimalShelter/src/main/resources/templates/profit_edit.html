@@ -10,17 +10,19 @@
 
                 <div class="caption">
                     <span class="col-sm-2" >Количество:</span>
-                    <input  name="amount" th:value="${profit.amount}"    />
+                    <input type="number" min="0" name="amount" th:value="${profit.amount}"    />
                 </div>					
 
                 <div class="caption"> 
                     <span class="col-sm-2" >Дата получения:</span>
-                    <div class="input-append date" id="dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
+                    <div class="input-append date" id="dp3"   data-date="16-06-2015" data-date-format="dd-mm-yyyy">
                         <span class="add-on"> 
                             <input   size="15" name="date_receive" th:value="${profit.date_receive}" readonly="readonly" />
-                            <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
+                            <a class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></a>
                         </span>
                     </div>
+                    <input type="hidden" id="yearReceive2" size="15" name="yearreceive" placeholder="Год получения" readonly="readonly" />
+                    <input type="hidden" id="monthReceive2" size="15" name="monthreceive" placeholder="Год получения" readonly="readonly" />
 
                 </div>	
                 <div class="caption"> 
@@ -60,14 +62,26 @@
 
         </form>
 
-        <script>
-            $('#dp3').datepicker();
-        </script>
-        <script>
-            document.title = "редактирование";
-        </script>
+
     </th:block>
 
 
 </html>
 
+<script>
+    document.title = "редактирование";
+    $('#dp3').datepicker();
+    $('#dp3').on("changeDate", function (event) {
+
+        var day = $('#dp3').datepicker('getDate').getDate();
+        var month = $('#dp3').datepicker('getDate').getMonth();
+        var year = $('#dp3').datepicker('getDate').getFullYear();
+        var rightM = month + 1;
+         
+//        alert(day);
+//        alert(rightM);
+//        alert(year);
+        $("#yearReceive2").val(year);
+        $("#monthReceive2").val(rightM);
+    });
+</script>

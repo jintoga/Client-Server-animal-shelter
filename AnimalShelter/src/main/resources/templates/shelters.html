@@ -3,26 +3,26 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="base">
 
     <th:block layout:fragment="rows">
-        <form method="POST" th:action="'/shelters/add'" enctype="multipart/form-data">
+        <form  id="addShelterForm" method="POST" th:action="'/shelters/add'" enctype="multipart/form-data">
 
             <table class="table">
 
                 <div class="caption">
-                    <input  name="name" placeholder="Название"  />
+                    <input  name="name" placeholder="Название" id="id_shelter_name" />
                 </div>					
 
                 <div class="caption">
-                    <input  type="tel" name="telephone" placeholder="Номер телефона"  />
+                    <input  type="tel" pattern="[0-9]*" title="Номер телефон" name="telephone" placeholder="Номер телефона" id="id_shelter_phone" />
                 </div>	
                 <div class="caption">
-                    <input  name="address" placeholder="Адрес"  />
+                    <input  name="address" placeholder="Адрес" id="id_shelter_address" />
 
                 </div>	
                 <div class="caption">
-                    <input  name="seat" placeholder="Количество мест"  />
+                    <input  name="seat" type="number" min="0" placeholder="Количество мест"  id="id_shelter_seat"/>
                 </div>	
                 <div class="caption">
-                    <input  name="free_seat" placeholder="Свободных мест"  />
+                    <input  name="free_seat" type="number" min="0" placeholder="Свободных мест"  id="id_shelter_free_seat"/>
                 </div>	
                 <div class="caption">
                     <input  type="url" name="site" placeholder="Сайт"  />
@@ -38,7 +38,7 @@
                     <textarea class="field span12" id="textarea" rows="6" name="description" placeholder="Описание"></textarea>
                 </div>
             </table>
-            <button type="submit" class="btn btn-primary">Добавить</button> 
+            <button   type="submit" class="btn btn-primary">Добавить</button> 
             <button type="reset" class="btn btn-default">Очистить поля</button> 
         </form>
 
@@ -67,7 +67,7 @@
                             <center><h6>Свободных мест: <span th:text="${shelter.free_seat}"></span></h6></center>
                             <center><h6>Сайт: <span th:text="${shelter.site}"></span></h6></center>
                             <center><h6>Почта: <span th:text="${shelter.email}"></span></h6></center>
-                            <center><h6>description: <span th:text="${shelter.description}"></span></h6></center>
+                            <center><h6>Описание: <span th:text="${shelter.description}"></span></h6></center>
 
                         </div>
                     </div>
@@ -75,11 +75,13 @@
 
             </tr>
         </tbody>
-        <script>
-            document.title = "Приюты";
-        </script>
+
     </th:block>
 
 
 
 </html>
+<script>
+    document.title = "Приюты";
+</script>
+<script src="/shelter_checkempty.js"></script>

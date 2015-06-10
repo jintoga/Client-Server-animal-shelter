@@ -8,11 +8,11 @@
         <div class="col-lg-3" >
 
             <br/><br/> 
-            <div id="makeBorder" style="padding: 25px;border: #9d9d9d groove 1px; border-radius: 15px">
-                 
+            <div id="makeBorder" style="padding: 15px;border: #9d9d9d groove 1px; border-radius: 15px">
+
                 <div><strong>Добавить Животного:</strong></div>
                 <br/>
-                <form id="addFrom" method="POST" th:action="'/animals/add'" enctype="multipart/form-data">
+                <form id="addAnimalFrom" method="POST" th:action="'/animals/add'" enctype="multipart/form-data">
 
                     <table class="table">
                         <form class="form-horizontal"  >
@@ -25,7 +25,7 @@
                             </h5>
                         </form>
                         <div class="caption  myForm has-error">
-                            <input  style="width: 160px" id="inputError" name="name" placeholder="Имя"    />
+                            <input  style="width: 160px" id="id_name_animal" name="name" placeholder="Имя"    />
                         </div>					
                         <div style="margin-top: 5px" class="caption" > 
 
@@ -39,14 +39,20 @@
 
                         </div>	
                         <div style="margin-top: 5px" class="caption">
-                            <input  style="width: 160px" name="type" placeholder="Тип (бесхозная,...)"  />
+                            <!--<input  style="width: 160px" name="type" placeholder="Тип (бесхозная,...)"  />-->
+                            <h5>Тип:
+                                <select name="type" style="margin-left:  20px"  >
+                                    <option value="Бездомное">Бездомное</option>
+                                    <option value="Потерянное">Потерянное</option>
+                                </select> 
+                            </h5>
                         </div>	
 
                         <div style="margin-top: 5px" class="caption">
-                            <input style="width: 160px" type="number"  name="weight" placeholder="Размер(вес)" id="id_weight" />
+                            <input style="width: 160px"  type="number" step="0.01" min="0" name="weight" placeholder="Вес" id="id_weight" />
                         </div>	
                         <div style="margin-top: 5px" class="caption">
-                            <input  style="width: 160px" name="breed" placeholder="Порода"  />
+                            <input  style="width: 160px" name="breed" placeholder="Порода"  id="id_breed"/>
                         </div>	
 
                         <div style="margin-top: 5px"  class="caption"> 
@@ -61,7 +67,7 @@
                         </div>
                         <div style="margin-top: 5px" class="caption" > 
 
-                            <h5>Стериализован:
+                            <h5>Стерилизован:
                                 <select name="sterilized" id="id_sterilized">
                                     <option value="1">Да</option>
                                     <option value="2">Нет</option>
@@ -149,8 +155,8 @@
                             <td> <div style="height: 70px; width: 70px"><a class="showModalAnimal" th:attr="data-id=${animal.pk_animal}" ><img  class="img" style="cursor: pointer;max-height: 100%; max-width: 100%"  th:src="@{'/img/animals/' + ${animal.pk_animal}} + '.jpg'"  /></a></div></td>
                             <td> <h4 class="addIconHere" ><span class="myfilter2 myIcon" th:text="${animal.type_animal.title}"></span></h4></td>
                             <td><h4><span th:text="${animal.name}"></span></h4></td>
-                            <td><h4><span th:text="${animal.showGender}"></span></h4></td>
-                            <td><h4><span th:text="${animal.showAge}"></span></h4></td>
+                            <td><h4><span class="maybeUnknown" th:text="${animal.showGender}"></span></h4></td>
+                            <td><h4><span class="maybeUnknown" th:text="${animal.showAge}"></span></h4></td>
                             <td>
                                 <form class="getRidOfIt" method="GET" th:action="@{'/animals/' + ${animal.pk_animal}}">
                                     <button class="btn btn-info btn-xs">Подробнее</button> 
@@ -211,12 +217,12 @@
 
 
     </th:block>
-    <script>
-        document.title = "Animals";
-
-
-    </script>
 
 
 
 </html>
+<script>
+    document.title = "Животные в приюте";
+
+</script>
+<script src="/filterscript.js"></script>

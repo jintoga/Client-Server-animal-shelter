@@ -42,23 +42,48 @@ public class Profit implements Serializable {
     private String description;
     private String date_receive;
 
+    private String yearreceive;
+    private String monthreceive;
+
+    public String getYearreceive() {
+        return yearreceive;
+    }
+
+    public void setYearreceive(String yearreceive) {
+        this.yearreceive = yearreceive;
+    }
+
+    public String getMonthreceive() {
+        return monthreceive;
+    }
+
+    public void setMonthreceive(String monthreceive) {
+        this.monthreceive = monthreceive;
+    }
+
     public Profit() {
     }
 
-    public Profit(Sponsor sponsor, Support_Type supporttype, int amount, String description, String date_receive) {
+    public Profit(Sponsor sponsor, Support_Type supporttype, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
         this.sponsor = sponsor;
         this.supporttype = supporttype;
         this.amount = amount;
         this.description = description;
         this.date_receive = date_receive;
+
+        this.yearreceive = yearreceive;
+        this.monthreceive = monthreceive;
     }
 
-    public void updateProfit(Sponsor sponsor, Support_Type supporttype, int amount, String description, String date_receive) {
+    public void updateProfit(Sponsor sponsor, Support_Type supporttype, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
         this.sponsor = sponsor;
         this.supporttype = supporttype;
         this.amount = amount;
         this.description = description;
         this.date_receive = date_receive;
+
+        this.yearreceive = yearreceive;
+        this.monthreceive = monthreceive;
     }
 
     public Long getPk_profit() {

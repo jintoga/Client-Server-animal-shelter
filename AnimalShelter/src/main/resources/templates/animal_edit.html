@@ -29,8 +29,13 @@
                         </select> 
                     </div>	
                     <div class="caption">
-                        <span class="col-sm-2" >Тип (бесхозная, ...):</span>
-                        <input  name="type" th:value="${animal.type}" />
+                        <span class="col-sm-2" >Тип:</span>
+                        <!--<input  name="type" th:value="${animal.type}" />-->
+                        <!--<span class="col-sm-2" >Вид:</span>-->
+                        <select  name="type">
+                            <option   th:value="Бездомное"  th:selected="Бездомное == ${animal.type}"  >Бездомное</option> 
+                            <option   th:value="Потерянное"  th:selected="Потерянное == ${animal.type}"  >Потерянное</option>
+                        </select> 
                     </div>	
 
                     <div class="caption">

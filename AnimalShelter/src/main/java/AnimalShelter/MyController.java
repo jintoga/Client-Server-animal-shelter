@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.imageio.ImageIO;
 
@@ -237,6 +238,7 @@ public class MyController extends WebMvcConfigurerAdapter {
         vars.addAttribute("sponsors", svc.sponsors());
         vars.addAttribute("support_types", svc.support_types());
         vars.addAttribute("profits", svc.profits());
+
         return "profits";
     }
 
@@ -250,13 +252,13 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 profit
     @RequestMapping(method = RequestMethod.POST, value = "/profits/add")
-    public String addNewProfit(@RequestParam Long pk_sponsor, @RequestParam Long pk_support_type, int amount, String description, String date_receive) {
+    public String addNewProfit(@RequestParam Long pk_sponsor, @RequestParam Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
 //        Sponsor sponsor = svc.sponsor(pk_sponsor);
 //        Support_Type support_type = svc.support_type(pk_support_type);
 
         log.info("support_type:" + pk_support_type);
         log.info("sponsor:" + pk_sponsor);
-        Profit profit = svc.addProfit(pk_sponsor, pk_support_type, amount, description, date_receive);
+        Profit profit = svc.addProfit(pk_sponsor, pk_support_type, amount, description, date_receive, yearreceive, monthreceive);
         return "redirect:/profits";
     }
 
@@ -265,6 +267,14 @@ public class MyController extends WebMvcConfigurerAdapter {
     @RequestMapping(method = RequestMethod.GET, value = "/filter")
     public Object filter(Long v1, Integer v2, Integer v3) {
         return svc.getListHelper(v1, v2, v3, MyService.isApprovedByAdmin);
+        //return svc.filterAllGender(v2);
+    }
+
+    //filter profit
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/filter_profit")
+    public Object filterProfit(String v1, String v2) {
+        return svc.filterProfits(v1, v2);
         //return svc.filterAllGender(v2);
     }
 
@@ -397,7 +407,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 owner
     @RequestMapping(method = RequestMethod.POST, value = "/owners/add")
-    public String addNewOwner(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, int amount_of_animal) {
+    public String addNewOwner(@RequestParam("file") MultipartFile file, @RequestParam String name, String telephone, String address, int amount_of_animal) {
         log.info(file);
         Owner owner = svc.addOwner(name, telephone, address, amount_of_animal);
         addImage(file, "owners", owner.getPk_owner());
@@ -406,7 +416,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 tempowner
     @RequestMapping(method = RequestMethod.POST, value = "/temp_owners/add")
-    public String addNewTempOwner(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, int amount_of_animal) {
+    public String addNewTempOwner(@RequestParam("file") MultipartFile file, @RequestParam String name, String telephone, String address, int amount_of_animal) {
 
         TempOwner temp_owner = svc.addTempOwner(name, telephone, address, amount_of_animal);
         addImage(file, "temp_owners", temp_owner.getPk_temp_owner());
@@ -461,7 +471,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 owner
     @RequestMapping(method = RequestMethod.POST, value = "/owners/{pk_owner}")
-    public String editOwner(@RequestParam("file") MultipartFile file, @PathVariable Long pk_owner, @RequestParam String name, int telephone, String address, int amount_of_animal) {
+    public String editOwner(@RequestParam("file") MultipartFile file, @PathVariable Long pk_owner, @RequestParam String name, String telephone, String address, int amount_of_animal) {
         Owner owner = svc.owner(pk_owner);
         svc.updateOwner(pk_owner, name, telephone, address, amount_of_animal);
         addImage(file, "owners", owner.getPk_owner());
@@ -470,7 +480,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 tempowner
     @RequestMapping(method = RequestMethod.POST, value = "/temp_owners/{pk_temp_owner}")
-    public String editTempOwner(@RequestParam("file") MultipartFile file, @PathVariable Long pk_temp_owner, @RequestParam String name, int telephone, String address, int amount_of_animal) {
+    public String editTempOwner(@RequestParam("file") MultipartFile file, @PathVariable Long pk_temp_owner, @RequestParam String name, String telephone, String address, int amount_of_animal) {
         TempOwner temp_owner = svc.temp_owner(pk_temp_owner);
         svc.updateTempOwner(pk_temp_owner, name, telephone, address, amount_of_animal);
         addImage(file, "temp_owners", temp_owner.getPk_temp_owner());
@@ -519,7 +529,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 shelter
     @RequestMapping(method = RequestMethod.POST, value = "/shelters/add")
-    public String addNewShelter(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public String addNewShelter(@RequestParam("file") MultipartFile file, @RequestParam String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
 
         Shelter shelter = svc.addShelter(name, telephone, address, seat, free_seat, site, email, description);
         addImage(file, "shelters", shelter.getPk_shelter());
@@ -536,7 +546,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 sponsor
     @RequestMapping(method = RequestMethod.POST, value = "/sponsors/add")
-    public String addNewSponsor(@RequestParam("file") MultipartFile file, @RequestParam String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public String addNewSponsor(@RequestParam("file") MultipartFile file, @RequestParam String name, String telephone, String address, String site, String email, String description, int is_organization) {
 
         Sponsor sponsor = svc.addSponsor(name, telephone, address, site, email, description, is_organization);
         addImage(file, "sponsors", sponsor.getPk_sponsor());
@@ -545,7 +555,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 staff
     @RequestMapping(method = RequestMethod.POST, value = "/staves/add")
-    public String addNewStaff(@RequestParam("file") MultipartFile file, @RequestParam String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public String addNewStaff(@RequestParam("file") MultipartFile file, @RequestParam String name, String career, String telephone, String date_of_birth, String address, String description) {
         log.info(date_of_birth);
         Staff staff = svc.addStaff(name, career, telephone, date_of_birth, address, description);
         addImage(file, "staves", staff.getPk_staff());
@@ -562,9 +572,9 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //add 1 volunteer
     @RequestMapping(method = RequestMethod.POST, value = "/volunteers/add")
-    public String addNewVolunteer(@RequestParam("file") MultipartFile file, @RequestParam String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public String addNewVolunteer(@RequestParam("file") MultipartFile file, @RequestParam String name, String telephone, String date_of_birth, String address, String description) {
         log.info(date_of_birth);
-        Volunteer volunteer = svc.addVolunteer(name, career, telephone, date_of_birth, address, description);
+        Volunteer volunteer = svc.addVolunteer(name, telephone, date_of_birth, address, description);
         addImage(file, "volunteers", volunteer.getPk_volunteer());
         return "redirect:/volunteers";
     }
@@ -695,7 +705,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 staff
     @RequestMapping(method = RequestMethod.POST, value = "/staves/{pk_staff}")
-    public String editStaff(@RequestParam("file") MultipartFile file, @PathVariable Long pk_staff, @RequestParam String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public String editStaff(@RequestParam("file") MultipartFile file, @PathVariable Long pk_staff, @RequestParam String name, String career, String telephone, String date_of_birth, String address, String description) {
         Staff staff = svc.staff(pk_staff);
         svc.updateStaff(pk_staff, name, career, telephone, date_of_birth, address, description);
         addImage(file, "staves", staff.getPk_staff());
@@ -704,9 +714,10 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 profit
     @RequestMapping(method = RequestMethod.POST, value = "/profits/{pk_profit}")
-    public String editProfit(@PathVariable Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive) {
+    public String editProfit(@PathVariable Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
         Profit profit = svc.profit(pk_profit);
-        svc.updateProfit(pk_profit, pk_sponsor, pk_support_type, amount, description, date_receive);
+        System.out.println("Year:" + yearreceive);
+        svc.updateProfit(pk_profit, pk_sponsor, pk_support_type, amount, description, date_receive, yearreceive, monthreceive);
         return "redirect:/profits/{pk_profit}";
     }
 
@@ -720,9 +731,9 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 volunteer
     @RequestMapping(method = RequestMethod.POST, value = "/volunteers/{pk_volunteer}")
-    public String editVolunteer(@RequestParam("file") MultipartFile file, @PathVariable Long pk_volunteer, @RequestParam String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public String editVolunteer(@RequestParam("file") MultipartFile file, @PathVariable Long pk_volunteer, @RequestParam String name, String telephone, String date_of_birth, String address, String description) {
         Volunteer volunteer = svc.volunteer(pk_volunteer);
-        svc.updateVolunteer(pk_volunteer, name, career, telephone, date_of_birth, address, description);
+        svc.updateVolunteer(pk_volunteer, name, telephone, date_of_birth, address, description);
         addImage(file, "volunteers", volunteer.getPk_volunteer());
         return "redirect:/volunteers/{pk_volunteer}";
     }
@@ -805,7 +816,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 shelter
     @RequestMapping(method = RequestMethod.POST, value = "/shelters/{pk_shelter}")
-    public String editShelter(@RequestParam("file") MultipartFile file, @PathVariable Long pk_shelter, @RequestParam String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public String editShelter(@RequestParam("file") MultipartFile file, @PathVariable Long pk_shelter, @RequestParam String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
         Shelter shelter = svc.shelter(pk_shelter);
         svc.updateShelter(pk_shelter, name, telephone, address, seat, free_seat, site, email, description);
         addImage(file, "shelters", shelter.getPk_shelter());
@@ -822,7 +833,7 @@ public class MyController extends WebMvcConfigurerAdapter {
 
     //edit 1 sponsor
     @RequestMapping(method = RequestMethod.POST, value = "/sponsors/{pk_sponsor}")
-    public String editSponsor(@RequestParam("file") MultipartFile file, @PathVariable Long pk_sponsor, @RequestParam String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public String editSponsor(@RequestParam("file") MultipartFile file, @PathVariable Long pk_sponsor, @RequestParam String name, String telephone, String address, String site, String email, String description, int is_organization) {
         Sponsor sponsor = svc.sponsor(pk_sponsor);
         svc.updateSponsor(pk_sponsor, name, telephone, address, site, email, description, is_organization);
         addImage(file, "sponsors", sponsor.getPk_sponsor());

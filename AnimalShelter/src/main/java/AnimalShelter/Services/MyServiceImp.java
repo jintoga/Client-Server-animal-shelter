@@ -9,6 +9,7 @@ import AnimalShelter.Core.Animal;
 import AnimalShelter.Core.Expense;
 import AnimalShelter.Core.Owner;
 import AnimalShelter.Core.Profit;
+import AnimalShelter.Core.ProfitHelper;
 import AnimalShelter.Core.Shelter;
 import AnimalShelter.Core.Sponsor;
 import AnimalShelter.Core.Staff;
@@ -47,78 +48,80 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MyServiceImp implements MyService {
-
+    
+    private final String unknown = "Неизвестно";
+    
     @Autowired
     private AnimalRepository animals;
-
+    
     @Autowired
     private TempOwnerRepository temp_owners;
-
+    
     @Autowired
     private OwnerRepository owners;
-
+    
     @Autowired
     private TypeAnimalRepository type_animals;
-
+    
     @Autowired
     private ShelterRepository shelters;
-
+    
     @Autowired
     private StaffRepository staves;
-
+    
     @Autowired
     private VolunteerRepository volunteers;
-
+    
     @Autowired
     private SponsorRepository sponsors;
-
+    
     @Autowired
     private ProfitRepository profits;
-
+    
     @Autowired
     private SupportTypeRepository support_types;
-
+    
     @Autowired
     private ExpenseRepository expenses;
-
+    
     protected final Log log = LogFactory.getLog(getClass());
-
+    
     @Override
     public Animal animal(Long id) {
         return animals.getOne(id);
     }
-
+    
     @Override
     public Collection<Animal> animalsIsApprovedByAdmin() {
-
+        
         return animals.findByIsapproved(isApprovedByAdmin);
     }
-
+    
     @Override
     public Collection<Animal> animalsWaitForApprove() {
         return animals.findByIsapproved(isWaitApprovedByAdmin);
     }
-
+    
     @Override
     public Collection<Staff> staves() {
         return staves.findAll();
     }
-
+    
     @Override
     public Staff staff(Long id) {
         return staves.getOne(id);
     }
-
+    
     @Override
     public Collection<Volunteer> volunteers() {
         return volunteers.findAll();
     }
-
+    
     @Override
     public Volunteer volunteer(Long id) {
         return volunteers.getOne(id);
     }
-
+    
     @Override
     public Animal addAnimal(Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized, boolean isApproved, String phoneNumber) {
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
@@ -138,12 +141,12 @@ public class MyServiceImp implements MyService {
         }
         return animals.save(animal);
     }
-
+    
     @Override
     public Animal addLostAnimal(Long pk_type_animal, String type, String description, String phoneNumber, String last_date_seen, String last_location, String latitude, String longitude) {
         Type_Animal type_animal = type_animals.getOne(pk_type_animal);
         Animal animal = new Animal(type_animal, type, description);
-
+        
         animal.setLast_date_seen(last_date_seen);
         animal.setLast_location(last_location);
         animal.setLatitude(latitude);
@@ -156,15 +159,19 @@ public class MyServiceImp implements MyService {
         System.out.println("Received new animal in:" + dateFormat.format(date));
         animal.setIs_approved(isWaitApprovedByAdmin);
         animal.setDateReceived(dateFormat.format(date));
-
+        animal.setName(unknown);
+        animal.setBreed(unknown);
+        animal.setGender(0);
+        animal.setAge(0);
+        animal.setSterilized(0);
         return animals.save(animal);
     }
-
+    
     @Override
     public Collection<Type_Animal> type_animal() {
         return type_animals.findAll();
     }
-
+    
     @Override
     public Type_Animal findAnimalPK(String type_animal) {
         for (Type_Animal t : type_animals.findAll()) {
@@ -174,10 +181,10 @@ public class MyServiceImp implements MyService {
         }
         return null;
     }
-
+    
     @Override
     public void filterOrganization() {
-
+        
         for (Sponsor sponsor : sponsors.findAll()) {
             if (sponsor.getIs_organization() == 1) {
                 sponsor.setShowIs_organization("Да");
@@ -186,10 +193,10 @@ public class MyServiceImp implements MyService {
             }
         }
     }
-
+    
     @Override
     public void filterGender() {
-
+        
         for (Animal animal : animals.findAll()) {
             if (animal.getGender() == 1) {
                 animal.setShowGender("Мальчик");
@@ -198,7 +205,7 @@ public class MyServiceImp implements MyService {
             }
         }
     }
-
+    
     @Override
     public void filterSterilized() {
         for (Animal animal : animals.findAll()) {
@@ -209,12 +216,12 @@ public class MyServiceImp implements MyService {
             }
         }
     }
-
+    
     @Override
     public void deleteAnimal(Long pk_animal) {
         animals.delete(pk_animal);
     }
-
+    
     @Override
     public void updateAnimal(Long pk_animal, Long pk_type_animal, String name, String type, int gender, float weight, String breed, int age, String description, int sterilized) {
         Animal animal = animal(pk_animal);
@@ -222,122 +229,122 @@ public class MyServiceImp implements MyService {
         animal.updateAnimal(type_animal, name, type, gender, weight, breed, age, description, sterilized);
         animals.save(animal);
     }
-
+    
     @Override
     public Collection<TempOwner> temp_owners() {
         return temp_owners.findAll();
     }
-
+    
     @Override
     public TempOwner temp_owner(Long id) {
         return temp_owners.getOne(id);
     }
-
+    
     @Override
     public Collection<Owner> owners() {
         return owners.findAll();
     }
-
+    
     @Override
     public Owner owner(Long id) {
         return owners.getOne(id);
     }
-
+    
     @Override
-    public TempOwner addTempOwner(String name, int telephone, String address, int amount_of_animal) {
+    public TempOwner addTempOwner(String name, String telephone, String address, int amount_of_animal) {
         return temp_owners.save(new TempOwner(name, telephone, address, amount_of_animal));
     }
-
+    
     @Override
-    public Owner addOwner(String name, int telephone, String address, int amount_of_animal) {
+    public Owner addOwner(String name, String telephone, String address, int amount_of_animal) {
         return owners.save(new Owner(name, telephone, address, amount_of_animal));
     }
-
+    
     @Override
-    public void updateOwner(Long pk_owner, String name, int telephone, String address, int amount_of_animal) {
+    public void updateOwner(Long pk_owner, String name, String telephone, String address, int amount_of_animal) {
         Owner owner = owner(pk_owner);
         owner.updateOwner(name, telephone, address, amount_of_animal);
         owners.save(owner);
     }
-
+    
     @Override
-    public void updateTempOwner(Long pk_temp_owner, String name, int telephone, String address, int amount_of_animal) {
+    public void updateTempOwner(Long pk_temp_owner, String name, String telephone, String address, int amount_of_animal) {
         TempOwner tOwner = temp_owner(pk_temp_owner);
         tOwner.updateTempOwner(name, telephone, address, amount_of_animal);
         temp_owners.save(tOwner);
     }
-
+    
     @Override
     public void deleteTempOwner(Long pk_temp_owner) {
         temp_owners.delete(pk_temp_owner);
     }
-
+    
     @Override
     public void deleteOwner(Long pk_owner) {
         owners.delete(pk_owner);
     }
-
+    
     @Override
     public Collection<Shelter> shelters() {
         return shelters.findAll();
     }
-
+    
     @Override
-    public Shelter addShelter(String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public Shelter addShelter(String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
         return shelters.save(new Shelter(name, telephone, address, seat, free_seat, site, email, description));
     }
-
+    
     @Override
-    public Staff addStaff(String name, String career, int telephone, String date_of_birth, String address, String description) {
+    public Staff addStaff(String name, String career, String telephone, String date_of_birth, String address, String description) {
         return staves.save(new Staff(name, career, telephone, date_of_birth, address, description));
     }
-
+    
     @Override
-    public Volunteer addVolunteer(String name, String career, int telephone, String date_of_birth, String address, String description) {
-        return volunteers.save(new Volunteer(name, career, telephone, date_of_birth, address, description));
+    public Volunteer addVolunteer(String name, String telephone, String date_of_birth, String address, String description) {
+        return volunteers.save(new Volunteer(name, telephone, date_of_birth, address, description));
     }
-
+    
     @Override
     public Shelter shelter(Long id) {
         return shelters.getOne(id);
     }
-
+    
     @Override
     public void deleteShelter(Long pk_shelter) {
         shelters.delete(pk_shelter);
     }
-
+    
     @Override
     public void deleteStaff(Long pk_staff) {
         staves.delete(pk_staff);
     }
-
+    
     @Override
     public void deleteVolunteer(Long pk_volunteer) {
         volunteers.delete(pk_volunteer);
     }
-
+    
     @Override
-    public void updateShelter(Long pk_shelter, String name, int telephone, String address, int seat, int free_seat, String site, String email, String description) {
+    public void updateShelter(Long pk_shelter, String name, String telephone, String address, int seat, int free_seat, String site, String email, String description) {
         Shelter shelter = shelters.getOne(pk_shelter);
         shelter.updateShelter(name, telephone, address, seat, free_seat, site, email, description);
         shelters.save(shelter);
     }
-
+    
     @Override
-    public void updateStaff(Long pk_staff, String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public void updateStaff(Long pk_staff, String name, String career, String telephone, String date_of_birth, String address, String description) {
         Staff staff = staves.getOne(pk_staff);
         staff.updateStaff(name, career, telephone, date_of_birth, address, description);
         staves.save(staff);
     }
-
+    
     @Override
-    public void updateVolunteer(Long pk_volunteer, String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public void updateVolunteer(Long pk_volunteer, String name, String telephone, String date_of_birth, String address, String description) {
         Volunteer volunteer = volunteers.getOne(pk_volunteer);
-        volunteer.updateVolunteer(name, career, telephone, date_of_birth, address, description);
+        volunteer.updateVolunteer(name, telephone, date_of_birth, address, description);
         volunteers.save(volunteer);
     }
-
+    
     @Override
     public ArrayList<Type_AnimalHelper> getListHelper(Long v1, Integer v2, Integer v3, Integer isApproved) {
         Type_Animal type_animal = type_animals.getOne(v1);
@@ -360,15 +367,15 @@ public class MyServiceImp implements MyService {
         } else {
             res = animals.findByTypeanimalAndGenderAndAgeAndIsapproved(type_animal, v2, v3, isApproved);
         }
-
+        
         for (Animal animal : res) {
             Type_AnimalHelper helper = new Type_AnimalHelper(animal);
-
+            
             listHelper.add(helper);
         }
         return listHelper;
     }
-
+    
     @Override
     public void filterAge() {
         for (Animal animal : animals.findAll()) {
@@ -383,130 +390,164 @@ public class MyServiceImp implements MyService {
             }
         }
     }
-
+    
     @Override
     public Collection<Sponsor> sponsors() {
         return sponsors.findAll();
     }
-
+    
     @Override
     public Sponsor sponsor(Long id) {
         return sponsors.getOne(id);
     }
-
+    
     @Override
-    public Sponsor addSponsor(String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public Sponsor addSponsor(String name, String telephone, String address, String site, String email, String description, int is_organization) {
         return sponsors.save(new Sponsor(name, telephone, address, site, email, description, is_organization));
     }
-
+    
     @Override
     public void deleteSponsor(Long pk_sponsor) {
         sponsors.delete(pk_sponsor);
     }
-
+    
     @Override
-    public void updateSponsor(Long pk_sponsor, String name, int telephone, String address, String site, String email, String description, int is_organization) {
+    public void updateSponsor(Long pk_sponsor, String name, String telephone, String address, String site, String email, String description, int is_organization) {
         Sponsor sponsor = sponsors.getOne(pk_sponsor);
         sponsor.updateSponsor(name, telephone, address, site, email, description, is_organization);
         sponsors.save(sponsor);
     }
-
+    
     @Override
     public Collection<Profit> profits() {
         return profits.findAll();
     }
-
+    
     @Override
     public Collection<Support_Type> support_types() {
         return support_types.findAll();
     }
-
+    
     @Override
     public Profit profit(Long id) {
         return profits.getOne(id);
     }
-
+    
     @Override
     public Support_Type support_type(Long id) {
         return support_types.getOne(id);
     }
-
+    
     @Override
-    public Profit addProfit(Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive) {
+    public Profit addProfit(Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
         Sponsor sponsor = sponsors.getOne(pk_sponsor);
         Support_Type support_type = support_types.getOne(pk_support_type);
-        return profits.save(new Profit(sponsor, support_type, amount, description, date_receive));
-
+        return profits.save(new Profit(sponsor, support_type, amount, description, date_receive, yearreceive, monthreceive));
+        
     }
-
+    
     @Override
     public void deleteProfit(Long pk_profit) {
         profits.delete(pk_profit);
     }
-
+    
     @Override
-    public void updateProfit(Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive) {
+    public void updateProfit(Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive) {
         Profit profit = profits.getOne(pk_profit);
         Sponsor sponsor = sponsors.getOne(pk_sponsor);
         Support_Type support_type = support_types.getOne(pk_support_type);
-        profit.updateProfit(sponsor, support_type, amount, description, date_receive);
+        profit.updateProfit(sponsor, support_type, amount, description, date_receive, yearreceive, monthreceive);
         profits.save(profit);
     }
-
+    
     @Override
     public Collection<Expense> expenses() {
         return expenses.findAll();
     }
-
+    
     @Override
     public Expense expense(Long id) {
         return expenses.getOne(id);
     }
-
+    
     @Override
     public Expense addExpense(String product, int price, String organization, String date_use, String description) {
         return expenses.save(new Expense(product, price, organization, date_use, description));
     }
-
+    
     @Override
     public void deleteExpense(Long pk_expense) {
         expenses.delete(pk_expense);
     }
-
+    
     @Override
     public void updateExpense(Long id, String product, int price, String organization, String date_use, String description) {
         Expense expense = expense(id);
         expense.updateExpense(product, price, organization, date_use, description);
         expenses.save(expense);
     }
-
+    
     @Override
     public Support_Type addSupport_type(String title) {
         return support_types.save(new Support_Type(title));
     }
-
+    
     @Override
     public void deleteSupport_type(Long pk_support_type) {
         support_types.delete(pk_support_type);
     }
-
+    
     @Override
     public void updateSupport_type(Long pk_support_type, String title) {
         Support_Type support_type = support_type(pk_support_type);
         support_type.updateSupport_Type(title);
         support_types.save(support_type);
     }
-
+    
     @Override
     public void approveAnimal(Long id) {
         Animal animal = animal(id);
         animal.setIs_approved(isApprovedByAdmin);
         animals.save(animal);
     }
-
+    
     @Override
     public Collection<Animal> animalsIsLost(String isLost) {
         return animals.findByTypeAndIsapproved(isLost, isApprovedByAdmin);
     }
-
+    
+    @Override
+    public Collection<String> profitsYears() {
+        Collection<String> listYears = null;
+        for (Profit profit : profits.findAll()) {
+            if (profit != null) {
+                listYears.add(profit.getYearreceive());
+                System.out.println("Profit:" + profit.getYearreceive());
+            }
+        }
+        return listYears;
+    }
+    
+    @Override
+    public ArrayList<ProfitHelper> filterProfits(String v1, String v2) {
+        Collection<Profit> res;
+        ArrayList<ProfitHelper> listHelper = new ArrayList<>();
+        if (v1.equals("Все") && v2.equals("Все")) {
+            res = profits.findAll();
+        } else if (!v1.equals("Все") && v2.equals("Все")) {
+            res = profits.findByYearreceive(v1);
+        } else if (v1.equals("Все") && !v2.equals("Все")) {
+            res = profits.findByMonthreceive(v2);
+        } else {
+            res = profits.findByYearreceiveAndMonthreceive(v1, v2);
+        }
+        
+        for (Profit profit : res) {
+            ProfitHelper helper = new ProfitHelper(profit);
+            
+            listHelper.add(helper);
+        }
+        return listHelper;
+    }
+    
 }

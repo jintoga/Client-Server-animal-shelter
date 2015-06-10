@@ -15,7 +15,7 @@
 
                     <div class="caption">
                         <span class="col-sm-2" >Номер телефона:</span>
-                        <input  name="telephone" th:value="${owner.telephone}" />
+                        <input type="tel" pattern="[0-9]*" title="Номер телефон" name="telephone" th:value="${owner.telephone}" />
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Адрес: </span>
@@ -23,7 +23,7 @@
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Количество животных:</span>
-                        <input  name="amount_of_animal" th:value="${owner.amount_of_animal}"  />
+                        <input type="number" min="0" name="amount_of_animal" th:value="${owner.amount_of_animal}"  />
                     </div>
 
 

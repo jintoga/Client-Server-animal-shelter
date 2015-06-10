@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 package AnimalShelter.Repositories;
- 
+
 import AnimalShelter.Core.Profit;
+import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,4 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProfitRepository extends JpaRepository<Profit, Long> {
 
+    Collection<Profit> findByYearreceive(String yearreceive);
+
+    Collection<Profit> findByMonthreceive(String monthreceive);
+
+    Collection<Profit> findByYearreceiveAndMonthreceive(String yearreceive, String monthreceive);
 }

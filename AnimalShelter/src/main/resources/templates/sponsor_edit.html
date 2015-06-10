@@ -21,7 +21,7 @@
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Номер телефона:</span>
-                        <input  name="telephone" th:value="${sponsor.telephone}" />
+                        <input   type="tel" pattern="[0-9]*" title="Номер телефон"  name="telephone" th:value="${sponsor.telephone}" />
                     </div>	
                     <div class="caption">
                         <span class="col-sm-2" >Адрес: </span>

@@ -27,8 +27,7 @@ public class Volunteer {
 
     @Column(nullable = false, unique = false)
     private String name;
-    private String career;
-    private Integer telephone;
+    private String telephone;
     private String date_of_birth;
     private String address;
     private String description;
@@ -36,9 +35,9 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public Volunteer(String name, String telephone, String date_of_birth, String address, String description) {
         this.name = name;
-        this.career = career;
+
         this.telephone = telephone;
         this.date_of_birth = date_of_birth;
         this.address = address;
@@ -46,9 +45,8 @@ public class Volunteer {
 
     }
 
-    public void updateVolunteer(String name, String career, Integer telephone, String date_of_birth, String address, String description) {
+    public void updateVolunteer(String name, String telephone, String date_of_birth, String address, String description) {
         this.name = name;
-        this.career = career;
         this.telephone = telephone;
         this.date_of_birth = date_of_birth;
         this.address = address;
@@ -73,19 +71,11 @@ public class Volunteer {
         this.name = name;
     }
 
-    public String getCareer() {
-        return career;
-    }
-
-    public void setCareer(String career) {
-        this.career = career;
-    }
-
-    public Integer getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

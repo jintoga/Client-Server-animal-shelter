@@ -9,6 +9,7 @@ import AnimalShelter.Core.Animal;
 import AnimalShelter.Core.Expense;
 import AnimalShelter.Core.Owner;
 import AnimalShelter.Core.Profit;
+import AnimalShelter.Core.ProfitHelper;
 import AnimalShelter.Core.Shelter;
 import AnimalShelter.Core.Sponsor;
 import AnimalShelter.Core.Staff;
@@ -50,6 +51,8 @@ public interface MyService {
     Collection<Sponsor> sponsors();
 
     Collection<Profit> profits();
+
+    Collection<String> profitsYears();
 
     Collection<Support_Type> support_types();
 
@@ -99,25 +102,25 @@ public interface MyService {
 
     void updateExpense(Long id, String product, int price, String organization, String date_use, String description);
 
-    public TempOwner addTempOwner(String name, int telephone, String address, int amount_of_animal);
+    public TempOwner addTempOwner(String name, String telephone, String address, int amount_of_animal);
 
-    public Owner addOwner(String name, int telephone, String address, int amount_of_animal);
+    public Owner addOwner(String name, String telephone, String address, int amount_of_animal);
 
     void deleteTempOwner(Long pk_temp_owner);
 
     void deleteOwner(Long pk_owner);
 
-    public void updateTempOwner(Long pk_temp_owner, String name, int telephone, String address, int amount_of_animal);
+    public void updateTempOwner(Long pk_temp_owner, String name, String telephone, String address, int amount_of_animal);
 
-    public void updateOwner(Long pk_owner, String name, int telephone, String address, int amount_of_animal);
+    public void updateOwner(Long pk_owner, String name, String telephone, String address, int amount_of_animal);
 
-    public Shelter addShelter(String name, int telephone, String address, int seat, int free_seat, String site, String email, String description);
+    public Shelter addShelter(String name, String telephone, String address, int seat, int free_seat, String site, String email, String description);
 
-    public Staff addStaff(String name, String career, int telephone, String date_of_birth, String address, String description);
+    public Staff addStaff(String name, String career, String telephone, String date_of_birth, String address, String description);
 
-    public Volunteer addVolunteer(String name, String career, int telephone, String date_of_birth, String address, String description);
+    public Volunteer addVolunteer(String name, String telephone, String date_of_birth, String address, String description);
 
-    public Sponsor addSponsor(String name, int telephone, String address, String site, String email, String description, int is_organization);
+    public Sponsor addSponsor(String name, String telephone, String address, String site, String email, String description, int is_organization);
 
     void deleteShelter(Long pk_shelter);
 
@@ -129,19 +132,19 @@ public interface MyService {
 
     void deleteProfit(Long pk_profit);
 
-    public void updateShelter(Long pk_shelter, String name, int telephone, String address, int seat, int free_seat, String site, String email, String description);
+    public void updateShelter(Long pk_shelter, String name, String telephone, String address, int seat, int free_seat, String site, String email, String description);
 
-    public void updateStaff(Long pk_staff, String name, String career, Integer telephone, String date_of_birth, String address, String description);
+    public void updateStaff(Long pk_staff, String name, String career, String telephone, String date_of_birth, String address, String description);
 
-    public void updateVolunteer(Long pk_volunteer, String name, String career, Integer telephone, String date_of_birth, String address, String description);
+    public void updateVolunteer(Long pk_volunteer, String name, String telephone, String date_of_birth, String address, String description);
 
-    public void updateSponsor(Long pk_sponsor, String name, int telephone, String address, String site, String email, String description, int is_organization);
+    public void updateSponsor(Long pk_sponsor, String name, String telephone, String address, String site, String email, String description, int is_organization);
 
     public ArrayList<Type_AnimalHelper> getListHelper(Long v1, Integer v2, Integer v3, Integer isApproved);
 
-    public Profit addProfit(Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive);
+    public Profit addProfit(Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive);
 
-    public void updateProfit(Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive);
+    public void updateProfit(Long pk_profit, Long pk_sponsor, Long pk_support_type, int amount, String description, String date_receive, String yearreceive, String monthreceive);
 
     public Support_Type addSupport_type(String title);
 
@@ -150,5 +153,7 @@ public interface MyService {
     public void updateSupport_type(Long pk_support_type, String title);
 
     void approveAnimal(Long id);
+
+    public ArrayList<ProfitHelper> filterProfits(String v1, String v2);
 
 }

@@ -9,16 +9,13 @@
             <table class="table">
 
                 <div class="caption">
-                    <span class="col-sm-2" >Название:</span>
+                    <span class="col-sm-2" >ФИО:</span>
                     <input  name="name" th:value="${volunteer.name}"    />
                 </div>					
-                <div class="caption">
-                    <span class="col-sm-2" >Должность:</span>
-                    <input  name="career" th:value="${volunteer.career}"  />
-                </div>
+               
                 <div class="caption">
                     <span class="col-sm-2" >Номер телефона:</span>
-                    <input  name="telephone" th:value="${volunteer.telephone}" />
+                    <input type="tel" pattern="[0-9]*" title="Номер телефон" name="telephone" th:value="${volunteer.telephone}" />
                 </div>	
                 <div class="caption">
                     <span class="col-sm-2" >Адрес: </span>
@@ -30,7 +27,7 @@
                     <div class="input-append date "  id="dp3" data-date="02-11-1992" data-date-format="dd-mm-yyyy">
                         <span class="add-on">  
                             <input   size="10" name="date_of_birth" th:value="${volunteer.date_of_birth}"  readonly="readonly" />
-                            <button class="glyphicon glyphicon-calendar   btn-link btn-xs"></button>
+                            <a class="glyphicon glyphicon-calendar   btn-link btn-xs"></a>
 
                         </span>
                     </div>

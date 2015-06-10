@@ -5,18 +5,18 @@
 
     <th:block layout:fragment="rows">
 
-        <form method="POST" th:action="'/staves/add'" enctype="multipart/form-data">
+        <form id="addStaffForm" method="POST" th:action="'/staves/add'" enctype="multipart/form-data">
 
             <table class="table">
                 <div class="caption">
-                    <input  name="name" placeholder="ФИО"  />
+                    <input  name="name" placeholder="ФИО" id="id_staff_name" />
                 </div>
                 <div class="caption">
-                    <input  name="career" placeholder="Должность"  />
+                    <input  name="career" placeholder="Должность" id="id_staff_career" />
                 </div>
 
                 <div class="caption">
-                    <input  name="telephone" placeholder="Номер телефона"  />
+                    <input type="tel" pattern="[0-9]*" title="Номер телефон" name="telephone" placeholder="Номер телефона"  id="id_staff_phone"/>
                 </div>	
 
                 <div class="caption"> 
@@ -24,7 +24,7 @@
                     <div class="input-append date dp3"   data-date="02-11-1992" data-date-format="dd-mm-yyyy">
                         <span class="add-on"> 
                             <input   size="12" name="date_of_birth" placeholder="Дата рождения" readonly="readonly" />
-                            <button class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></button>
+                            <a class="glyphicon glyphicon-calendar  btn btn-link btn-xs"></a>
                         </span>
                     </div>
 
@@ -32,7 +32,7 @@
                 </div>	
 
                 <div class="caption">
-                    <input  name="address" placeholder="Адрес"  />
+                    <input  name="address" placeholder="Адрес"  id="id_staff_address"/>
                 </div>	
 
                 <span class="btn btn-default btn-file">
@@ -66,7 +66,7 @@
                             <center><h6>Номер телефона: <span th:text="${staff.telephone}"></span></h6></center>
                             <center><h6>Дата рождения: <span th:text="${staff.date_of_birth}"></span></h6></center>
                             <center><h6>Адрес: <span th:text="${staff.address}"></span></h6></center>
-                            <center><h6>description: <span th:text="${staff.description}"></span></h6></center>
+                            <center><h6>Описание: <span th:text="${staff.description}"></span></h6></center>
 
 
                         </div>
@@ -75,9 +75,11 @@
 
             </tr>
         </tbody>
-        <script>
-            document.title = "Сотрудники";
-        </script>
+
     </th:block>
 
 </html>
+<script>
+    document.title = "Сотрудники";
+</script>
+<script src="/staff_checkempty.js"></script>
